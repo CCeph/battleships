@@ -10,13 +10,23 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/dataHandler.js":
+/*!****************************!*\
+  !*** ./src/dataHandler.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ createShip)\n/* harmony export */ });\nfunction createShip(length) {\n  return {\n    length\n  };\n}\n\n//# sourceURL=webpack://webpack_eslint_prettier_template/./src/dataHandler.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n\n\n//# sourceURL=webpack://webpack_eslint_prettier_template/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _dataHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dataHandler */ \"./src/dataHandler.js\");\n\n\n\n//# sourceURL=webpack://webpack_eslint_prettier_template/./src/index.js?");
 
 /***/ }),
 
