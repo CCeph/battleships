@@ -1,2 +1,2 @@
-# Webpack, Eslint, and Prettier Template
-This template is meant to be forked to easily setupa project with webpack, eslint and prettier
+# Battleships
+A web game for battleships. The goal of this project is to practice coding with Test Driven Development.
