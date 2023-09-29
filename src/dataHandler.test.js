@@ -26,7 +26,7 @@ describe("Gameboard tests", () => {
   test("Gameboard factory creates 10x10 shipboard", () => {
     const playerGameboard = createGameboard();
 
-    /* const emptyShipBoard = [
+    /* const emptyShipboard = [
       [null, null, null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null, null, null],
@@ -39,8 +39,26 @@ describe("Gameboard tests", () => {
       [null, null, null, null, null, null, null, null, null, null],
     ]; */
 
-    playerGameboard.getShipBoard().forEach((row) => {
+    playerGameboard.getShipboard().forEach((row) => {
       expect(row.length === 10);
     });
+  });
+
+  test("Gameboard objects can place ships on the board", () => {
+    const submarine = createShip(1, "H");
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(submarine, [0, 0]);
+    expect(playerGameboard.getShipboard()).toStrictEqual([
+      [submarine, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]);
   });
 });
