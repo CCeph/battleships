@@ -26,19 +26,6 @@ describe("Gameboard tests", () => {
   test("Gameboard factory creates 10x10 shipboard", () => {
     const playerGameboard = createGameboard();
 
-    /* const emptyShipboard = [
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-    ]; */
-
     playerGameboard.getShipboard().forEach((row) => {
       expect(row.length === 10);
     });
