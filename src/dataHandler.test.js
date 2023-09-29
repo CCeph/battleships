@@ -45,13 +45,60 @@ describe("Gameboard tests", () => {
   });
 
   test("Gameboard objects can place ships on the board", () => {
-    const submarine = createShip(1, "H");
+    const submarine = createShip(1);
     const playerGameboard = createGameboard();
-    playerGameboard.placeShip(submarine, [0, 0]);
+    playerGameboard.placeShip(submarine, [0, 0], "H");
     expect(playerGameboard.getShipboard()).toStrictEqual([
       [submarine, null, null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]);
+  });
+
+  test("Gameboard objects can place ships, with length bigger than 1, on the board", () => {
+    const carrier = createShip(5);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(carrier, [0, 0], "H");
+    expect(playerGameboard.getShipboard()).toStrictEqual([
+      [
+        carrier,
+        carrier,
+        carrier,
+        carrier,
+        carrier,
+        null,
+        null,
+        null,
+        null,
+        null,
+      ],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]);
+  });
+
+  test("Gameboard objects can place ships with length 3 vertically on the board", () => {
+    const cruiser = createShip(3);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(cruiser, [0, 0], "V");
+    expect(playerGameboard.getShipboard()).toStrictEqual([
+      [cruiser, null, null, null, null, null, null, null, null, null],
+      [cruiser, null, null, null, null, null, null, null, null, null],
+      [cruiser, null, null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null, null, null],

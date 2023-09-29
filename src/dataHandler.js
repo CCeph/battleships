@@ -1,4 +1,4 @@
-export function createShip(length, alignment) {
+export function createShip(length) {
   let totalHits = 0;
 
   function getTotalHits() {
@@ -7,10 +7,6 @@ export function createShip(length, alignment) {
 
   function getLength() {
     return length;
-  }
-
-  function getAlignment() {
-    return alignment;
   }
 
   function hit() {
@@ -23,7 +19,7 @@ export function createShip(length, alignment) {
     }
     return false;
   }
-  return { hit, isSunk, getTotalHits, getLength, getAlignment };
+  return { hit, isSunk, getTotalHits, getLength };
 }
 
 export function createGameboard() {
@@ -44,16 +40,15 @@ export function createGameboard() {
     return shipboard;
   }
 
-  function placeShip(ship, position) {
+  function placeShip(ship, position, alignment) {
     const currentPosition = [...position];
     const shipLength = ship.getLength();
-    const shipAlignment = ship.getAlignment();
     for (let i = 0; i < shipLength; i += 1) {
-      shipboard[position[1]][position[0]] = ship;
-      if (shipAlignment === "H") {
-        currentPosition[0] = +1;
-      } else if (shipAlignment === "V") {
-        currentPosition[1] = +1;
+      shipboard[currentPosition[1]][currentPosition[0]] = ship;
+      if (alignment === "H") {
+        currentPosition[0] += 1;
+      } else if (alignment === "V") {
+        currentPosition[1] += 1;
       } else {
         console.error("Incorrect Ship Alignment");
       }
