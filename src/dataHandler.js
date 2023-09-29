@@ -1,6 +1,14 @@
 export function createShip(length) {
   let totalHits = 0;
 
+  function getTotalHits() {
+    return totalHits;
+  }
+
+  function getLength() {
+    return length;
+  }
+
   function hit() {
     totalHits += 1;
   }
@@ -10,14 +18,6 @@ export function createShip(length) {
       return true;
     }
     return false;
-  }
-
-  function getTotalHits() {
-    return totalHits;
-  }
-
-  function getLength() {
-    return length;
   }
   return { hit, isSunk, getTotalHits, getLength };
 }
