@@ -1,17 +1,25 @@
 export function createShip(length) {
-  const totalHits = 0;
+  let totalHits = 0;
 
   function hit() {
-    this.totalHits += 1;
+    totalHits += 1;
   }
 
   function isSunk() {
-    if (this.totalHits === this.length) {
+    if (totalHits === length) {
       return true;
     }
     return false;
   }
-  return { length, totalHits, hit, isSunk };
+
+  function getTotalHits() {
+    return totalHits;
+  }
+
+  function getLength() {
+    return length;
+  }
+  return { hit, isSunk, getTotalHits, getLength };
 }
 
 export function createGameboard() {
