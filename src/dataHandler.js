@@ -1,4 +1,4 @@
-export default function createShip(length) {
+export function createShip(length) {
   const totalHits = 0;
 
   function hit() {
@@ -12,4 +12,25 @@ export default function createShip(length) {
     return false;
   }
   return { length, totalHits, hit, isSunk };
+}
+
+export function createGameboard() {
+  const shipBoard = [
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+  ];
+
+  function getShipBoard() {
+    return shipBoard;
+  }
+
+  return { getShipBoard };
 }

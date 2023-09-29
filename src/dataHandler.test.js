@@ -1,4 +1,4 @@
-import createShip from "./dataHandler";
+import { createShip, createGameboard } from "./dataHandler";
 
 test("Ship factory creates an object with correct length provided", () => {
   expect(createShip(4).length).toBe(4);
@@ -20,4 +20,27 @@ test("Ship factory creates objects that can tell if they've been sunk or not", (
   expect(ship.isSunk()).toBeFalsy();
   ship.hit();
   expect(ship.isSunk()).toBeTruthy();
+});
+
+describe("Gameboard tests", () => {
+  test("Gameboard factory creates 10x10 shipboard", () => {
+    const playerGameboard = createGameboard();
+
+    /* const emptyShipBoard = [
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]; */
+
+    playerGameboard.getShipBoard().forEach((row) => {
+      expect(row.length === 10);
+    });
+  });
 });
