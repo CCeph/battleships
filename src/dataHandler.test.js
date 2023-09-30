@@ -132,13 +132,25 @@ describe("Gameboard tests", () => {
     ]);
   });
 
-  test.skip("Gameboard throws error if ships try to be placed out of bounds", () => {
+  test("Gameboard ignores ships trying to be placed out of bounds", () => {
     const cruiser = createShip(3);
     const playerGameboard = createGameboard();
-    expect(playerGameboard.placeShip(cruiser, [8, 8], "H")).toThrow(
-      "Out of Bounds"
-    );
+    playerGameboard.placeShip(cruiser, [8, 8], "H");
+    expect(playerGameboard.getShipboard()).toStrictEqual([
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]);
   });
+
+  test.skip("If gameboard can throw and catch an error for out of bounds, that would be nice", () => {});
 
   test("Gameboard can get hitboard", () => {
     const playerGameboard = createGameboard();

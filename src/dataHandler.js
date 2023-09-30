@@ -57,9 +57,22 @@ export function createGameboard() {
     return hitboard;
   }
 
+  function checkOutofBounds(length, alignment, position) {
+    const posX = position[0];
+    const posY = position[1];
+    if (alignment === "H") {
+      return posX + length - 1 > 9;
+    }
+    return posY + length - 1 > 9;
+  }
+
   function placeShip(ship, position, alignment) {
     const currentPosition = [...position];
     const shipLength = ship.getLength();
+    if (checkOutofBounds(shipLength, alignment, position) === true) {
+      console.log("Out of Bounds");
+      return;
+    }
     for (let i = 0; i < shipLength; i += 1) {
       shipboard[currentPosition[1]][currentPosition[0]] = ship;
       if (alignment === "H") {
@@ -86,3 +99,7 @@ export function createGameboard() {
 
   return { getShipboard, placeShip, getHitboard, receiveAttack };
 }
+
+const cruiser = createShip(3);
+const playerGameboard = createGameboard();
+playerGameboard.placeShip(cruiser, [8, 8], "H");
