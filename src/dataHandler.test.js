@@ -138,6 +138,13 @@ describe("Gameboard tests", () => {
 
   test.skip("Gameboard, placing ships: Ships can't be placed within 1 box of one another", () => {});
 
+  test("Gameboard, placing ships: Placing a ship adds it to totalShips of gameboard", () => {
+    const cruiser = createShip(3);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(cruiser, [4, 4], "H");
+    expect(playerGameboard.getTotalShips()).toContain(cruiser);
+  });
+
   test("Gameboard ignores ships trying to be placed out of bounds", () => {
     const cruiser = createShip(3);
     const playerGameboard = createGameboard();
@@ -199,12 +206,30 @@ describe("Gameboard tests", () => {
     expect(cruiser.getTotalHits()).toBe(1);
   });
 
-  test.skip("Gameboard, receive attack: checks if all ships have been sunk after the hit", () => {
+  test.skip("Gameboard, receive attack: checks if all ships sunk after hit", () => {});
+
+  test("Gameboard, isAllSunk: works with 1 ship", () => {
     const cruiser = createShip(3);
     const playerGameboard = createGameboard();
     playerGameboard.placeShip(cruiser, [2, 0], "V");
     playerGameboard.receiveAttack([2, 0]);
     playerGameboard.receiveAttack([2, 1]);
     playerGameboard.receiveAttack([2, 2]);
+    const totalShips = playerGameboard.getTotalShips();
+    expect(playerGameboard.isAllSunk(totalShips)).toBe(true);
+  });
+
+  test("Gameboard, isAllSunk: works with 2 ships", () => {
+    const cruiser = createShip(3);
+    const submarine = createShip(1);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(cruiser, [2, 0], "V");
+    playerGameboard.placeShip(submarine, [8, 7], "H");
+    playerGameboard.receiveAttack([2, 0]);
+    playerGameboard.receiveAttack([2, 1]);
+    playerGameboard.receiveAttack([2, 2]);
+    playerGameboard.receiveAttack([8, 7]);
+    const totalShips = playerGameboard.getTotalShips();
+    expect(playerGameboard.isAllSunk(totalShips)).toBe(true);
   });
 });

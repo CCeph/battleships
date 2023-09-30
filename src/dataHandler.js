@@ -49,12 +49,22 @@ export function createGameboard() {
     [null, null, null, null, null, null, null, null, null, null],
   ];
 
+  const totalShips = [];
+
   function getShipboard() {
     return shipboard;
   }
 
   function getHitboard() {
     return hitboard;
+  }
+
+  function getTotalShips() {
+    return totalShips;
+  }
+
+  function appendShipToTotal(ship) {
+    totalShips.push(ship);
   }
 
   function checkOutofBounds(length, alignment, position) {
@@ -83,6 +93,11 @@ export function createGameboard() {
         console.error("Incorrect Ship Alignment");
       }
     }
+    appendShipToTotal(ship);
+  }
+
+  function isAllSunk(totalShips) {
+    return totalShips.every((ship) => ship.isSunk());
   }
 
   function receiveAttack(position) {
@@ -97,7 +112,14 @@ export function createGameboard() {
     hitboard[position[1]][position[0]] = "hit";
   }
 
-  return { getShipboard, placeShip, getHitboard, receiveAttack };
+  return {
+    getShipboard,
+    placeShip,
+    getHitboard,
+    receiveAttack,
+    getTotalShips,
+    isAllSunk,
+  };
 }
 
 const cruiser = createShip(3);
