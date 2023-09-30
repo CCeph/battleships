@@ -132,6 +132,12 @@ describe("Gameboard tests", () => {
     ]);
   });
 
+  test.skip("Gameboard, placing ships: Can place multiple ships on the same board", () => {});
+
+  test.skip("Gameboard, placing ships: Ships can't be placed on top of each other", () => {});
+
+  test.skip("Gameboard, placing ships: Ships can't be placed within 1 box of one another", () => {});
+
   test("Gameboard ignores ships trying to be placed out of bounds", () => {
     const cruiser = createShip(3);
     const playerGameboard = createGameboard();
@@ -184,12 +190,21 @@ describe("Gameboard tests", () => {
     expect(cruiser.getTotalHits()).toBe(1);
   });
 
-  test("Game, receive attack: hitting the same location does not hit ship twice", () => {
+  test("Gameboard, receive attack: hitting the same location does not hit ship twice", () => {
     const cruiser = createShip(3);
     const playerGameboard = createGameboard();
     playerGameboard.placeShip(cruiser, [2, 0], "V");
     playerGameboard.receiveAttack([2, 0]);
     playerGameboard.receiveAttack([2, 0]);
     expect(cruiser.getTotalHits()).toBe(1);
+  });
+
+  test.skip("Gameboard, receive attack: checks if all ships have been sunk after the hit", () => {
+    const cruiser = createShip(3);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(cruiser, [2, 0], "V");
+    playerGameboard.receiveAttack([2, 0]);
+    playerGameboard.receiveAttack([2, 1]);
+    playerGameboard.receiveAttack([2, 2]);
   });
 });
