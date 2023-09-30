@@ -95,4 +95,89 @@ describe("Gameboard tests", () => {
       [null, null, null, null, null, null, null, null, null, null],
     ]);
   });
+
+  test("Gameboard objects can place ships in the middle vertically", () => {
+    const cruiser = createShip(3);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(cruiser, [4, 4], "V");
+    expect(playerGameboard.getShipboard()).toStrictEqual([
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, cruiser, null, null, null, null, null],
+      [null, null, null, null, cruiser, null, null, null, null, null],
+      [null, null, null, null, cruiser, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]);
+  });
+
+  test("Gameboard objects can place ships in the middle horizontally", () => {
+    const cruiser = createShip(3);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(cruiser, [4, 4], "H");
+    expect(playerGameboard.getShipboard()).toStrictEqual([
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, cruiser, cruiser, cruiser, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]);
+  });
+
+  test.skip("Gameboard throws error if ships try to be placed out of bounds", () => {
+    const cruiser = createShip(3);
+    const playerGameboard = createGameboard();
+    expect(playerGameboard.placeShip(cruiser, [8, 8], "H")).toThrow(
+      "Out of Bounds"
+    );
+  });
+
+  test("Gameboard can get hitboard", () => {
+    const playerGameboard = createGameboard();
+    expect(playerGameboard.getHitboard()).toStrictEqual([
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]);
+  });
+
+  test("Gameboards can receive attacks and record the hits", () => {
+    const cruiser = createShip(3);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(cruiser, [0, 0], "V");
+    playerGameboard.receiveAttack([0, 0]);
+    expect(playerGameboard.getHitboard()[0][0]).toBe("hit");
+  });
+
+  test("Gameboard, receive attack recognizes if a ship was hit", () => {
+    const cruiser = createShip(3);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(cruiser, [2, 0], "V");
+    playerGameboard.receiveAttack([2, 0]);
+    expect(cruiser.getTotalHits()).toBe(1);
+  });
+
+  test("Game, receive attack: hitting the same location does not hit ship twice", () => {
+    const cruiser = createShip(3);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(cruiser, [2, 0], "V");
+    playerGameboard.receiveAttack([2, 0]);
+    playerGameboard.receiveAttack([2, 0]);
+    expect(cruiser.getTotalHits()).toBe(1);
+  });
 });

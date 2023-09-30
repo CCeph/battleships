@@ -36,8 +36,25 @@ export function createGameboard() {
     [null, null, null, null, null, null, null, null, null, null],
   ];
 
+  const hitboard = [
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+  ];
+
   function getShipboard() {
     return shipboard;
+  }
+
+  function getHitboard() {
+    return hitboard;
   }
 
   function placeShip(ship, position, alignment) {
@@ -55,5 +72,17 @@ export function createGameboard() {
     }
   }
 
-  return { getShipboard, placeShip };
+  function receiveAttack(position) {
+    if (hitboard[position[1]][position[0]] === "hit") {
+      return;
+    }
+    const currentShipboard = this.getShipboard();
+    const storedShipboardValue = currentShipboard[position[1]][position[0]];
+    if (storedShipboardValue !== null) {
+      storedShipboardValue.hit();
+    }
+    hitboard[position[1]][position[0]] = "hit";
+  }
+
+  return { getShipboard, placeShip, getHitboard, receiveAttack };
 }
