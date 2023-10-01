@@ -121,7 +121,3 @@ export function createGameboard() {
     isAllSunk,
   };
 }
-
-const cruiser = createShip(3);
-const playerGameboard = createGameboard();
-playerGameboard.placeShip(cruiser, [8, 8], "H");

@@ -132,9 +132,37 @@ describe("Gameboard tests", () => {
     ]);
   });
 
-  test.skip("Gameboard, placing ships: Can place multiple ships on the same board", () => {});
+  test("Gameboard, placing ships: Can place multiple ships on the same board", () => {
+    const carrier = createShip(5);
+    const cruiser = createShip(3);
+    const submarine = createShip(1);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(cruiser, [4, 4], "H");
+    playerGameboard.placeShip(carrier, [1, 1], "V");
+    playerGameboard.placeShip(submarine, [9, 9], "H");
+    expect(playerGameboard.getShipboard()).toStrictEqual([
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, carrier, null, null, null, null, null, null, null, null],
+      [null, carrier, null, null, null, null, null, null, null, null],
+      [null, carrier, null, null, null, null, null, null, null, null],
+      [null, carrier, null, null, cruiser, cruiser, cruiser, null, null, null],
+      [null, carrier, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, submarine],
+    ]);
+  });
 
-  test.skip("Gameboard, placing ships: Ships can't be placed on top of each other", () => {});
+  test.skip("Gameboard, placing ships: Ships can't be placed on top of each other.", () => {
+    const carrier = createShip(5);
+    const cruiser = createShip(3);
+    const submarine = createShip(1);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(cruiser, [4, 4], "H");
+    playerGameboard.placeShip(carrier, [4, 1], "V");
+    playerGameboard.placeShip(submarine, [9, 9], "H");
+  });
 
   test.skip("Gameboard, placing ships: Ships can't be placed within 1 box of one another", () => {});
 
