@@ -161,8 +161,6 @@ describe("Gameboard tests", () => {
     expect(playerGameboard.getTotalShips()).toContain(cruiser);
   });
 
-  test.skip("If gameboard can throw and catch an error for out of bounds, that would be nice", () => {});
-
   describe("Tests for placing ships with pubsub mocks", () => {
     let PubSub;
     beforeEach(() => {
@@ -185,7 +183,7 @@ describe("Gameboard tests", () => {
       expect(PubSub.publish).toBeCalledWith(badShipPlacementEvent);
     });
 
-    test("Gameboard ignores ships trying to be placed out of bounds", () => {
+    test("Gameboard ignores ships trying to be placed out of bounds, and sends event", () => {
       const cruiser = createShip(3);
       const playerGameboard = createGameboard();
       playerGameboard.placeShip(cruiser, [8, 8], "H", PubSub);
@@ -201,6 +199,9 @@ describe("Gameboard tests", () => {
         [null, null, null, null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null, null, null, null],
       ]);
+
+      const outOfBoundsEvent = "outOfBoundsEvent";
+      expect(PubSub.publish).toBeCalledWith(outOfBoundsEvent);
     });
   });
 

@@ -86,8 +86,8 @@ export function createGameboard() {
     const currentPosition = [...position];
     const shipLength = ship.getLength();
     if (isOutofBounds(shipLength, alignment, position) === true) {
-      const badShipPlacementEvent = "badShipPlacementEvent";
-      PubSub.publish(badShipPlacementEvent);
+      const outOfBoundsEvent = "outOfBoundsEvent";
+      PubSub.publish(outOfBoundsEvent);
       return;
     }
     for (let i = 0; i < shipLength; i += 1) {
@@ -136,12 +136,3 @@ export function createGameboard() {
     isAllSunk,
   };
 }
-
-const carrier = createShip(5);
-const cruiser = createShip(3);
-const submarine = createShip(1);
-const playerGameboard = createGameboard();
-playerGameboard.placeShip(cruiser, [4, 4], "H", PubSub);
-playerGameboard.placeShip(carrier, [4, 1], "V", PubSub);
-playerGameboard.placeShip(submarine, [9, 9], "H", PubSub);
-console.log(playerGameboard.getShipboard());
