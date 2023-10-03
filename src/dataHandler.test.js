@@ -154,16 +154,6 @@ describe("Gameboard tests", () => {
     ]);
   });
 
-  test.skip("Gameboard, placing ships: Ships can't be placed on top of each other.", () => {
-    const carrier = createShip(5);
-    const cruiser = createShip(3);
-    const submarine = createShip(1);
-    const playerGameboard = createGameboard();
-    playerGameboard.placeShip(cruiser, [4, 4], "H");
-    playerGameboard.placeShip(carrier, [4, 1], "V");
-    playerGameboard.placeShip(submarine, [9, 9], "H");
-  });
-
   test.skip("Gameboard, placing ships: Ships can't be placed within 1 box of one another", () => {});
 
   test("Gameboard, placing ships: Placing a ship adds it to totalShips of gameboard", () => {
@@ -173,25 +163,48 @@ describe("Gameboard tests", () => {
     expect(playerGameboard.getTotalShips()).toContain(cruiser);
   });
 
-  test("Gameboard ignores ships trying to be placed out of bounds", () => {
-    const cruiser = createShip(3);
-    const playerGameboard = createGameboard();
-    playerGameboard.placeShip(cruiser, [8, 8], "H");
-    expect(playerGameboard.getShipboard()).toStrictEqual([
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-    ]);
-  });
-
   test.skip("If gameboard can throw and catch an error for out of bounds, that would be nice", () => {});
+
+  describe("Tests for placing ships with pubsub mocks", () => {
+    let PubSub;
+    beforeEach(() => {
+      PubSub = {
+        publish: jest.fn(),
+        subscribe: jest.fn(),
+      };
+    });
+
+    test("Gameboard, placing ships: Ships can't be placed on top of each other.", () => {
+      const carrier = createShip(5);
+      const cruiser = createShip(3);
+      const submarine = createShip(1);
+      const playerGameboard = createGameboard();
+      playerGameboard.placeShip(cruiser, [4, 4], "H", PubSub);
+      playerGameboard.placeShip(carrier, [4, 1], "V", PubSub);
+      playerGameboard.placeShip(submarine, [9, 9], "H", PubSub);
+
+      const badShipPlacementEvent = "badShipPlacementEvent";
+      expect(PubSub.publish).toBeCalledWith(badShipPlacementEvent);
+    });
+
+    test("Gameboard ignores ships trying to be placed out of bounds", () => {
+      const cruiser = createShip(3);
+      const playerGameboard = createGameboard();
+      playerGameboard.placeShip(cruiser, [8, 8], "H", PubSub);
+      expect(playerGameboard.getShipboard()).toStrictEqual([
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+      ]);
+    });
+  });
 
   test("Gameboard can get hitboard", () => {
     const playerGameboard = createGameboard();
@@ -261,3 +274,8 @@ describe("Gameboard tests", () => {
     expect(playerGameboard.isAllSunk(totalShips)).toBe(true);
   });
 });
+
+test.skip("Side-effect of bad ship placement: Clear the board");
+test.skip(
+  "Side-effect of bad ship placement: Inform user to repeat input after clearing the board."
+);
