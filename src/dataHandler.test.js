@@ -275,7 +275,5 @@ describe("Gameboard tests", () => {
   });
 });
 
-test.skip("Side-effect of bad ship placement: Clear the board");
-test.skip(
-  "Side-effect of bad ship placement: Inform user to repeat input after clearing the board."
-);
+test.skip("Side-effect of bad ship placement: Clear the board", () => {});
+test.skip("Side-effect of bad ship placement: Inform user to repeat input after clearing the board.", () => {});
