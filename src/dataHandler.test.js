@@ -154,8 +154,6 @@ describe("Gameboard tests", () => {
     ]);
   });
 
-  test.skip("Gameboard, placing ships: Ships can't be placed within 1 box of one another", () => {});
-
   test("Gameboard, placing ships: Placing a ship adds it to totalShips of gameboard", () => {
     const cruiser = createShip(3);
     const playerGameboard = createGameboard();
