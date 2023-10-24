@@ -1,4 +1,4 @@
-import { createShip, createGameboard } from "./dataHandler";
+import { createShip, createGameboard, playerFactory } from "./dataHandler";
 
 test("Ship factory creates an object with correct length provided", () => {
   expect(createShip(4).getLength()).toBe(4);
@@ -271,6 +271,36 @@ describe("Gameboard tests", () => {
     playerGameboard.receiveAttack([8, 7]);
     const totalShips = playerGameboard.getTotalShips();
     expect(playerGameboard.isAllSunk(totalShips)).toBe(true);
+  });
+});
+
+describe("Player Tests", () => {
+  test("Player, turn: retrieve player's turn status (on/off)", () => {
+    const player = playerFactory();
+    expect(player.getTurnStatus()).toBe("active");
+  });
+
+  test("Player, turn: switch player's turn status between on and off", () => {
+    const player = playerFactory();
+    expect(player.getTurnStatus()).toBe("active");
+    player.switchTurns();
+    expect(player.getTurnStatus()).toBe("inactive");
+  });
+
+  test("Player, gameboard: Each player has a unique gameboard", () => {
+    const player = playerFactory();
+    expect(player.getGameboard().getShipboard()).toStrictEqual([
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]);
   });
 });
 

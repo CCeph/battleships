@@ -111,8 +111,8 @@ export function createGameboard() {
     appendShipToTotal(ship);
   }
 
-  function isAllSunk(totalShips) {
-    return totalShips.every((ship) => ship.isSunk());
+  function isAllSunk(allShips) {
+    return allShips.every((ship) => ship.isSunk());
   }
 
   function receiveAttack(position) {
@@ -134,5 +134,33 @@ export function createGameboard() {
     receiveAttack,
     getTotalShips,
     isAllSunk,
+  };
+}
+
+export function playerFactory(turnInput = "active") {
+  let turnStatus = turnInput;
+
+  const gameboard = createGameboard();
+
+  function getTurnStatus() {
+    return turnStatus;
+  }
+
+  function switchTurns() {
+    if (turnStatus === "active") {
+      turnStatus = "inactive";
+    } else {
+      turnStatus = "active";
+    }
+  }
+
+  function getGameboard() {
+    return gameboard;
+  }
+
+  return {
+    getTurnStatus,
+    switchTurns,
+    getGameboard,
   };
 }
