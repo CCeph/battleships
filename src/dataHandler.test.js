@@ -1,4 +1,9 @@
-import { createShip, createGameboard, playerFactory } from "./dataHandler";
+import {
+  createShip,
+  createGameboard,
+  playerFactory,
+  computerFactory,
+} from "./dataHandler";
 
 test("Ship factory creates an object with correct length provided", () => {
   expect(createShip(4).getLength()).toBe(4);
@@ -301,6 +306,20 @@ describe("Player Tests", () => {
       [null, null, null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null, null, null],
     ]);
+  });
+});
+
+describe("Computer Tests", () => {
+  test("Computer, turn: retrieve computer's turn status (on/off)", () => {
+    const computer = computerFactory();
+    expect(computer.getTurnStatus()).toBe("inactive");
+  });
+
+  test("Computer, turn: switch computer's turn status between on and off", () => {
+    const computer = computerFactory("active");
+    expect(computer.getTurnStatus()).toBe("active");
+    computer.switchTurns();
+    expect(computer.getTurnStatus()).toBe("inactive");
   });
 });
 

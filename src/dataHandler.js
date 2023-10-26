@@ -164,3 +164,31 @@ export function playerFactory(turnInput = "active") {
     getGameboard,
   };
 }
+
+export function computerFactory(turnInput = "inactive") {
+  let turnStatus = turnInput;
+
+  const gameboard = createGameboard();
+
+  function getTurnStatus() {
+    return turnStatus;
+  }
+
+  function switchTurns() {
+    if (turnStatus === "active") {
+      turnStatus = "inactive";
+    } else {
+      turnStatus = "active";
+    }
+  }
+
+  function getGameboard() {
+    return gameboard;
+  }
+
+  return {
+    getTurnStatus,
+    switchTurns,
+    getGameboard,
+  };
+}
