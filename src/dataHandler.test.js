@@ -360,7 +360,26 @@ describe("Computer Tests", () => {
     ]);
   });
 
-  test.skip("Computer, randomHitPlayer: doesn't choose a coordinate that was already hit before", () => {});
+  test("Computer, randomHitPlayer: doesn't choose a coordinate that was already hit before", () => {
+    for (let x = 0; x <= 9; x += 1) {
+      for (let y = 0; y <= 8; y += 1) {
+        computer.hitPlayer(player, [x, y]);
+      }
+    }
+    computer.randomHitPlayer(player);
+    expect(player.getGameboard().getHitboard()[9]).not.toStrictEqual([
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+    ]);
+  });
 });
 
 test.skip("Side-effect of bad ship placement: Clear the board", () => {});

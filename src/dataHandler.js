@@ -194,10 +194,21 @@ export function computerFactory(turnInput = "inactive") {
     return Math.floor(Math.random() * max);
   }
 
+  function getRandomCoordinate(maxX, maxY) {
+    const randomX = getRandomInt(maxX);
+    const randomY = getRandomInt(maxY);
+    const randomCoordinate = [randomX, randomY];
+    return randomCoordinate;
+  }
+
   function randomHitPlayer(player) {
-    const randomX = getRandomInt(10);
-    const randomY = getRandomInt(10);
-    const randomHitPosition = [randomX, randomY];
+    let randomHitPosition = getRandomCoordinate(10, 10);
+    let [randomX, randomY] = randomHitPosition;
+
+    while (player.getGameboard().getHitboard()[randomY][randomX] === "hit") {
+      randomHitPosition = getRandomCoordinate(10, 10);
+      [randomX, randomY] = randomHitPosition;
+    }
     player.getGameboard().receiveAttack(randomHitPosition);
   }
 
