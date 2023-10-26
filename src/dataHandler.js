@@ -186,9 +186,26 @@ export function computerFactory(turnInput = "inactive") {
     return gameboard;
   }
 
+  function hitPlayer(player, position) {
+    player.getGameboard().receiveAttack(position);
+  }
+
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+  function randomHitPlayer(player) {
+    const randomX = getRandomInt(10);
+    const randomY = getRandomInt(10);
+    const randomHitPosition = [randomX, randomY];
+    player.getGameboard().receiveAttack(randomHitPosition);
+  }
+
   return {
     getTurnStatus,
     switchTurns,
     getGameboard,
+    randomHitPlayer,
+    hitPlayer,
   };
 }

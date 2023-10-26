@@ -311,8 +311,10 @@ describe("Player Tests", () => {
 
 describe("Computer Tests", () => {
   let computer;
+  let player;
   beforeEach(() => {
     computer = computerFactory();
+    player = playerFactory();
   });
 
   test("Computer, turn: retrieve computer's turn status (on/off)", () => {
@@ -326,9 +328,39 @@ describe("Computer Tests", () => {
     expect(computer.getTurnStatus()).toBe("inactive");
   });
 
-  test("Computer, hitPlayer: chooses a random coordinate to hit", () => {});
+  test("Computer, hitPlayer: choose a specific coordinate to hit for testing purposes", () => {
+    computer.hitPlayer(player, [0, 1]);
+    expect(player.getGameboard().getHitboard()).toStrictEqual([
+      [null, null, null, null, null, null, null, null, null, null],
+      ["hit", null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]);
+  });
 
-  test("Computer, hitPlayer: doesn't choose a coordinate that was already hit before", () => {});
+  test("Computer, randomHitPlayer: chooses a random coordinate to hit", () => {
+    computer.randomHitPlayer(player);
+    expect(player.getGameboard().getHitboard()).not.toStrictEqual([
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]);
+  });
+
+  test.skip("Computer, randomHitPlayer: doesn't choose a coordinate that was already hit before", () => {});
 });
 
 test.skip("Side-effect of bad ship placement: Clear the board", () => {});
