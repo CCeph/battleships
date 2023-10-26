@@ -310,17 +310,25 @@ describe("Player Tests", () => {
 });
 
 describe("Computer Tests", () => {
+  let computer;
+  beforeEach(() => {
+    computer = computerFactory();
+  });
+
   test("Computer, turn: retrieve computer's turn status (on/off)", () => {
-    const computer = computerFactory();
     expect(computer.getTurnStatus()).toBe("inactive");
   });
 
   test("Computer, turn: switch computer's turn status between on and off", () => {
-    const computer = computerFactory("active");
+    computer = computerFactory("active");
     expect(computer.getTurnStatus()).toBe("active");
     computer.switchTurns();
     expect(computer.getTurnStatus()).toBe("inactive");
   });
+
+  test("Computer, hitPlayer: chooses a random coordinate to hit", () => {});
+
+  test("Computer, hitPlayer: doesn't choose a coordinate that was already hit before", () => {});
 });
 
 test.skip("Side-effect of bad ship placement: Clear the board", () => {});
