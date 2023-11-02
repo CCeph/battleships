@@ -40,10 +40,32 @@ body {
   padding: 1rem;
 }
 
-.gameStatus > h3 {
+.gameStatus > h2 {
   text-align: center;
 }
 
 .gameboards {
   flex: 1;
+
+  display: flex;
+  justify-content: space-around;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  width: 500px;
+  height: 500px;
+  border: 1px solid black;
+  background-color: black;
+  gap: 1px;
+}
+
+.boardCell {
+  background-color: white;
+}
+
+:is(.player, .computer) > h3 {
+  text-align: center;
 }
