@@ -69,3 +69,14 @@ body {
 :is(.player, .computer) > h3 {
   text-align: center;
 }
+
+.placementGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.alignment > input {
+  width: 10px;
+  height: 10px;
+  border: 1px solid black;
+}
