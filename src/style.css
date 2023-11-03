@@ -70,9 +70,26 @@ body {
   text-align: center;
 }
 
+.placeShipsForm {
+  width: 800px;
+  margin: 3rem auto 3rem auto;
+}
+
 .placementGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+
+  border: 1px solid black;
+  background-color: black;
+  gap: 1px;
+}
+
+.placementGrid > * {
+  background-color: white;
+}
+
+.placementGrid :is(p, h4) {
+  margin: 0;
 }
 
 .alignment > input {
