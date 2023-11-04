@@ -84,6 +84,12 @@ body {
   gap: 1px;
 }
 
+.submitRow {
+  grid-column: 1 / 5;
+  text-align: center;
+  padding: 10px;
+}
+
 .placementGrid > * {
   background-color: white;
 }
