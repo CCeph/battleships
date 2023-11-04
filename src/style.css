@@ -84,7 +84,7 @@ body {
 }
 
 .placeShipsForm {
-  width: 800px;
+  width: 850px;
   margin: 3rem auto 3rem auto;
 }
 
@@ -105,6 +105,8 @@ body {
 
 .placementGrid > * {
   background-color: white;
+  text-align: center;
+  padding: 10px;
 }
 
 .placementGrid :is(p, h4) {
