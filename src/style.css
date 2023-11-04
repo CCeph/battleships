@@ -97,3 +97,8 @@ body {
   height: 10px;
   border: 1px solid black;
 }
+
+.position > input {
+  width: 1.5rem;
+  text-align: center;
+}
