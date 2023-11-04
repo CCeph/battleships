@@ -27,7 +27,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _dataHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dataHandler */ \"./src/dataHandler.js\");\n\n\n\n//# sourceURL=webpack://webpack_eslint_prettier_template/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _dataHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dataHandler */ \"./src/dataHandler.js\");\n/* harmony import */ var _inputHandler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./inputHandler */ \"./src/inputHandler.js\");\n/* harmony import */ var _inputHandler__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_inputHandler__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\n//# sourceURL=webpack://webpack_eslint_prettier_template/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/inputHandler.js":
+/*!*****************************!*\
+  !*** ./src/inputHandler.js ***!
+  \*****************************/
+/***/ (() => {
+
+eval("\n\n//# sourceURL=webpack://webpack_eslint_prettier_template/./src/inputHandler.js?");
 
 /***/ }),
 
