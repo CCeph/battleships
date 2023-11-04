@@ -53,15 +53,18 @@ function getShipValues(shipElements) {
   const shipValues = {};
   const shipEntries = Object.entries(shipElements);
   shipEntries.forEach((ship) => {
+    const shipName = ship[0];
+    const shipObject = ship[1];
+
     let shipAlignment = "";
-    if (ship[1].$H.checked === true) {
+    if (shipObject.$H.checked === true) {
       shipAlignment = "H";
     } else {
       shipAlignment = "V";
     }
-    shipValues[ship[0]] = {
-      X: ship[1].$X.value,
-      Y: ship[1].$Y.value,
+    shipValues[shipName] = {
+      X: shipObject.$X.value,
+      Y: shipObject.$Y.value,
       alignment: shipAlignment,
     };
   });
@@ -73,6 +76,7 @@ function listenToInputs() {
     e.preventDefault();
     const inputElements = getShipInputElements();
     const shipValues = getShipValues(inputElements);
+    console.log(shipValues);
 
     const shipsInputEvent = "shipsInputEvent";
     PubSub.publish(shipsInputEvent, shipValues);
