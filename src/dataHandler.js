@@ -82,12 +82,12 @@ export function createGameboard() {
     return contentOfPosition !== null;
   }
 
-  function placeShip(ship, position, alignment, PubSub) {
+  function placeShip(ship, position, alignment, fakePubSub) {
     const currentPosition = [...position];
     const shipLength = ship.getLength();
     if (isOutofBounds(shipLength, alignment, position) === true) {
       const outOfBoundsEvent = "outOfBoundsEvent";
-      PubSub.publish(outOfBoundsEvent);
+      fakePubSub.publish(outOfBoundsEvent);
       return;
     }
     for (let i = 0; i < shipLength; i += 1) {
@@ -95,7 +95,7 @@ export function createGameboard() {
         isAlreadyOccupied(shipboard[currentPosition[1]][currentPosition[0]])
       ) {
         const badShipPlacementEvent = "badShipPlacementEvent";
-        PubSub.publish(badShipPlacementEvent);
+        fakePubSub.publish(badShipPlacementEvent);
         return;
       }
 
