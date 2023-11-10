@@ -1,7 +1,8 @@
 import PubSub from "pubsub-js";
 
-export function createShip(length) {
+export function createShip(length, givenName = null) {
   let totalHits = 0;
+  const shipName = givenName;
 
   function getTotalHits() {
     return totalHits;
@@ -9,6 +10,10 @@ export function createShip(length) {
 
   function getLength() {
     return length;
+  }
+
+  function getName() {
+    return shipName;
   }
 
   function hit() {
@@ -21,7 +26,7 @@ export function createShip(length) {
     }
     return false;
   }
-  return { hit, isSunk, getTotalHits, getLength };
+  return { hit, isSunk, getTotalHits, getLength, getName };
 }
 
 export function createGameboard() {
@@ -140,7 +145,7 @@ export function createGameboard() {
 export function playerFactory(turnInput = "active") {
   let turnStatus = turnInput;
 
-  const gameboard = createGameboard();
+  let gameboard = createGameboard();
 
   function getTurnStatus() {
     return turnStatus;
@@ -158,10 +163,15 @@ export function playerFactory(turnInput = "active") {
     return gameboard;
   }
 
+  function updateGameboard(newGameboard) {
+    gameboard = newGameboard;
+  }
+
   return {
     getTurnStatus,
     switchTurns,
     getGameboard,
+    updateGameboard,
   };
 }
 
@@ -218,5 +228,37 @@ export function computerFactory(turnInput = "inactive") {
     getGameboard,
     randomHitPlayer,
     hitPlayer,
+  };
+}
+
+export function gameFactory() {
+  const player = playerFactory();
+  const computer = computerFactory();
+
+  function getPlayer() {
+    return player;
+  }
+
+  function devDefaultInitialize() {
+    const carrier = createShip(5, "carrier");
+    const battleship = createShip(4, "battleship");
+    const cruiser = createShip(3, "cruiser");
+    const submarine = createShip(3, "submarine");
+    const destroyer = createShip(2, "destroyer");
+
+    const updatedGameboard = player.getGameboard();
+
+    updatedGameboard.placeShip(carrier, [0, 0], "H", PubSub);
+    updatedGameboard.placeShip(battleship, [0, 1], "H", PubSub);
+    updatedGameboard.placeShip(cruiser, [0, 2], "H", PubSub);
+    updatedGameboard.placeShip(submarine, [0, 3], "H", PubSub);
+    updatedGameboard.placeShip(destroyer, [0, 4], "H", PubSub);
+
+    player.updateGameboard(updatedGameboard);
+  }
+
+  return {
+    getPlayer,
+    devDefaultInitialize,
   };
 }

@@ -3,7 +3,10 @@ import {
   createGameboard,
   playerFactory,
   computerFactory,
+  gameFactory,
 } from "./dataHandler";
+
+const allEqual = (arr) => arr.every((val) => val === arr[0]);
 
 test("Ship factory creates an object with correct length provided", () => {
   expect(createShip(4).getLength()).toBe(4);
@@ -25,6 +28,11 @@ test("Ship factory creates objects that can tell if they've been sunk or not", (
   expect(ship.isSunk()).toBeFalsy();
   ship.hit();
   expect(ship.isSunk()).toBeTruthy();
+});
+
+test("Ship factory, getName: returns the optional name for the ship", () => {
+  const ship = createShip(5, "carrier");
+  expect(ship.getName()).toBe("carrier");
 });
 
 describe("Gameboard tests", () => {
@@ -307,6 +315,43 @@ describe("Player Tests", () => {
       [null, null, null, null, null, null, null, null, null, null],
     ]);
   });
+
+  test("Player, updateGameboard: player's gameboard can be updated with a new one", () => {
+    const PubSub = {
+      publish: jest.fn(),
+      subscribe: jest.fn(),
+    };
+
+    const player = playerFactory();
+    const newGameboard = player.getGameboard();
+
+    const carrier = createShip(5);
+    newGameboard.placeShip(carrier, [0, 0], "H", PubSub);
+    player.updateGameboard(newGameboard);
+    expect(player.getGameboard().getShipboard()).toStrictEqual([
+      [
+        carrier,
+        carrier,
+        carrier,
+        carrier,
+        carrier,
+        null,
+        null,
+        null,
+        null,
+        null,
+      ],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]);
+  });
 });
 
 describe("Computer Tests", () => {
@@ -379,6 +424,60 @@ describe("Computer Tests", () => {
       null,
       null,
     ]);
+  });
+});
+
+describe("Game Tests", () => {
+  test("Game, devInitialize: places player and computer ships in predefined coordinates", () => {
+    const game = gameFactory();
+    game.devDefaultInitialize();
+    const shipboard = game.getPlayer().getGameboard().getShipboard();
+    const carrierArray = [
+      shipboard[0][0],
+      shipboard[0][1],
+      shipboard[0][2],
+      shipboard[0][3],
+      shipboard[0][4],
+    ];
+    const battleshipArray = [
+      shipboard[1][0],
+      shipboard[1][1],
+      shipboard[1][2],
+      shipboard[1][3],
+    ];
+    const cruiserArray = [shipboard[2][0], shipboard[2][1], shipboard[2][2]];
+    const submarineArray = [shipboard[3][0], shipboard[3][1], shipboard[3][2]];
+    const destroyerArray = [shipboard[4][0], shipboard[4][1]];
+
+    const allShipsArray = [
+      carrierArray,
+      battleshipArray,
+      cruiserArray,
+      submarineArray,
+      destroyerArray,
+    ];
+
+    const expectedNamesArray = [
+      "carrier",
+      "battleship",
+      "cruiser",
+      "submarine",
+      "destroyer",
+    ];
+
+    const actualNamesArray = [
+      carrierArray[0].getName(),
+      battleshipArray[0].getName(),
+      cruiserArray[0].getName(),
+      submarineArray[0].getName(),
+      destroyerArray[0].getName(),
+    ];
+
+    allShipsArray.forEach((shipArray) =>
+      expect(allEqual(shipArray)).toBe(true)
+    );
+
+    expect(actualNamesArray).toStrictEqual(expectedNamesArray);
   });
 });
 
