@@ -178,7 +178,7 @@ export function playerFactory(turnInput = "active") {
 export function computerFactory(turnInput = "inactive") {
   let turnStatus = turnInput;
 
-  const gameboard = createGameboard();
+  let gameboard = createGameboard();
 
   function getTurnStatus() {
     return turnStatus;
@@ -194,6 +194,10 @@ export function computerFactory(turnInput = "inactive") {
 
   function getGameboard() {
     return gameboard;
+  }
+
+  function updateGameboard(newGameboard) {
+    gameboard = newGameboard;
   }
 
   function hitPlayer(player, position) {
@@ -226,6 +230,7 @@ export function computerFactory(turnInput = "inactive") {
     getTurnStatus,
     switchTurns,
     getGameboard,
+    updateGameboard,
     randomHitPlayer,
     hitPlayer,
   };
@@ -237,6 +242,10 @@ export function gameFactory() {
 
   function getPlayer() {
     return player;
+  }
+
+  function getComputer() {
+    return computer;
   }
 
   function devDefaultInitialize() {
@@ -255,10 +264,14 @@ export function gameFactory() {
     updatedGameboard.placeShip(destroyer, [0, 4], "H", PubSub);
 
     player.updateGameboard(updatedGameboard);
+
+    const newComputerGameboard = { ...updatedGameboard };
+    computer.updateGameboard(newComputerGameboard);
   }
 
   return {
     getPlayer,
+    getComputer,
     devDefaultInitialize,
   };
 }

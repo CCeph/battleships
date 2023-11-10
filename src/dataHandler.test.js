@@ -425,9 +425,50 @@ describe("Computer Tests", () => {
       null,
     ]);
   });
+
+  test("Computer, updateGameboard: Computer's gameboard can be updated with a new one", () => {
+    const PubSub = {
+      publish: jest.fn(),
+      subscribe: jest.fn(),
+    };
+
+    const computer = computerFactory();
+    const newGameboard = computer.getGameboard();
+
+    const carrier = createShip(5);
+    newGameboard.placeShip(carrier, [0, 0], "H", PubSub);
+    computer.updateGameboard(newGameboard);
+    expect(computer.getGameboard().getShipboard()).toStrictEqual([
+      [
+        carrier,
+        carrier,
+        carrier,
+        carrier,
+        carrier,
+        null,
+        null,
+        null,
+        null,
+        null,
+      ],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ]);
+  });
 });
 
 describe("Game Tests", () => {
+  test.skip("Game, getPlayer: returns player", () => {});
+
+  test.skip("Game, getComputer: returns computer", () => {});
+
   test("Game, devInitialize: places player and computer ships in predefined coordinates", () => {
     const game = gameFactory();
     game.devDefaultInitialize();
@@ -478,6 +519,10 @@ describe("Game Tests", () => {
     );
 
     expect(actualNamesArray).toStrictEqual(expectedNamesArray);
+
+    expect(game.getComputer().getGameboard().getShipboard()).toStrictEqual(
+      game.getPlayer().getGameboard().getShipboard()
+    );
   });
 });
 
