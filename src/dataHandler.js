@@ -279,26 +279,37 @@ export function gameFactory() {
   }
 
   function hitComputer(eventName, $hitCell) {
+    if (player.getTurnStatus() === "inactive") {
+      return;
+    }
     const [x, y] = convertIndexToCoordinates($hitCell.id);
     const newGameboard = computer.getGameboard();
-    newGameboard.receiveAttack([x, y]);
+    newGameboard.receiveAttack([x, y], PubSub);
     const renderHitEvents = "renderHitEvents";
     PubSub.publish(renderHitEvents, { player, computer });
   }
 
-  function listenToHits() {
+  function switchPlayers(eventMsg) {
+    player.switchTurns();
+    computer.switchTurns();
+  }
+
+  function listenToEvents() {
     const computerHitEvent = "computerHitEvent";
     PubSub.subscribe(computerHitEvent, hitComputer);
+
+    const switchPlayersEvent = "switchPlayersEvent";
+    PubSub.subscribe(switchPlayersEvent, switchPlayers);
   }
 
   return {
     getPlayer,
     getComputer,
     devDefaultInitialize,
-    listenToHits,
+    listenToEvents,
   };
 }
 
 const game = gameFactory();
 game.devDefaultInitialize(PubSub);
-game.listenToHits();
+game.listenToEvents();
