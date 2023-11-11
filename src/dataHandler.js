@@ -1,4 +1,5 @@
 import PubSub from "pubsub-js";
+import { convertIndexToCoordinates } from "./commonUtils";
 
 export function createShip(length, givenName = null) {
   let totalHits = 0;
@@ -255,29 +256,46 @@ export function gameFactory() {
     const submarine = createShip(3, "submarine");
     const destroyer = createShip(2, "destroyer");
 
-    const updatedGameboard = player.getGameboard();
+    const updatedPlayerGameboard = player.getGameboard();
 
-    updatedGameboard.placeShip(carrier, [0, 0], "H", PubSub);
-    updatedGameboard.placeShip(battleship, [0, 1], "H", PubSub);
-    updatedGameboard.placeShip(cruiser, [0, 2], "H", PubSub);
-    updatedGameboard.placeShip(submarine, [0, 3], "H", PubSub);
-    updatedGameboard.placeShip(destroyer, [0, 4], "H", PubSub);
+    updatedPlayerGameboard.placeShip(carrier, [0, 0], "H", PubSub);
+    updatedPlayerGameboard.placeShip(battleship, [0, 1], "H", PubSub);
+    updatedPlayerGameboard.placeShip(cruiser, [0, 2], "H", PubSub);
+    updatedPlayerGameboard.placeShip(submarine, [0, 3], "H", PubSub);
+    updatedPlayerGameboard.placeShip(destroyer, [0, 4], "H", PubSub);
 
-    player.updateGameboard(updatedGameboard);
-
-    const newComputerGameboard = { ...updatedGameboard };
-    computer.updateGameboard(newComputerGameboard);
+    const updatedComputerGameboard = computer.getGameboard();
+    updatedComputerGameboard.placeShip(carrier, [0, 0], "H", PubSub);
+    updatedComputerGameboard.placeShip(battleship, [0, 1], "H", PubSub);
+    updatedComputerGameboard.placeShip(cruiser, [0, 2], "H", PubSub);
+    updatedComputerGameboard.placeShip(submarine, [0, 3], "H", PubSub);
+    updatedComputerGameboard.placeShip(destroyer, [0, 4], "H", PubSub);
 
     const renderShipsEvents = "renderShipsEvents";
     injectedPubSub.publish(renderShipsEvents, { player, computer });
+  }
+
+  function hitComputer(eventName, $hitCell) {
+    const [x, y] = convertIndexToCoordinates($hitCell.id);
+    const newGameboard = computer.getGameboard();
+    newGameboard.receiveAttack([x, y]);
+    const renderHitEvents = "renderHitEvents";
+    PubSub.publish(renderHitEvents, { player, computer });
+  }
+
+  function listenToHits() {
+    const computerHitEvent = "computerHitEvent";
+    PubSub.subscribe(computerHitEvent, hitComputer);
   }
 
   return {
     getPlayer,
     getComputer,
     devDefaultInitialize,
+    listenToHits,
   };
 }
 
 const game = gameFactory();
 game.devDefaultInitialize(PubSub);
+game.listenToHits();

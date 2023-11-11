@@ -1,5 +1,5 @@
 import PubSub from "pubsub-js";
-import calculateBoardIndex from "./commonUtils";
+import { calculateBoardIndex } from "./commonUtils";
 
 function createDOMCache() {
   const $playerCellsList = document.querySelectorAll(".player .boardCell");

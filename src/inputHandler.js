@@ -4,7 +4,9 @@ function createDOMCache() {
   const $placeShipsForm = document.querySelector(
     "[data-form-name='placeShips']"
   );
-  return { $placeShipsForm };
+  const $playerCellsList = document.querySelectorAll(".player .boardCell");
+  const $computerCellsList = document.querySelectorAll(".computer .boardCell");
+  return { $placeShipsForm, $playerCellsList, $computerCellsList };
 }
 
 const cachedDOM = createDOMCache();
@@ -80,6 +82,13 @@ function listenToInputs() {
 
     const shipsInputEvent = "shipsInputEvent";
     PubSub.publish(shipsInputEvent, shipValues);
+  });
+
+  Array.from(cachedDOM.$computerCellsList).forEach((cell) => {
+    cell.addEventListener("click", () => {
+      const computerHitEvent = "computerHitEvent";
+      PubSub.publish(computerHitEvent, cell);
+    });
   });
 }
 
