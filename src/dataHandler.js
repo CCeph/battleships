@@ -289,7 +289,7 @@ export function gameFactory() {
     PubSub.publish(renderHitEvents, { player, computer });
   }
 
-  function switchPlayers(eventMsg) {
+  function switchPlayers() {
     player.switchTurns();
     computer.switchTurns();
   }
