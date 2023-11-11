@@ -79,6 +79,10 @@ body {
   background-color: white;
 }
 
+.boardCell.occupied {
+  background-color: rgb(146, 146, 146);
+}
+
 :is(.player, .computer) > h3 {
   text-align: center;
 }

@@ -248,7 +248,7 @@ export function gameFactory() {
     return computer;
   }
 
-  function devDefaultInitialize() {
+  function devDefaultInitialize(injectedPubSub) {
     const carrier = createShip(5, "carrier");
     const battleship = createShip(4, "battleship");
     const cruiser = createShip(3, "cruiser");
@@ -267,6 +267,9 @@ export function gameFactory() {
 
     const newComputerGameboard = { ...updatedGameboard };
     computer.updateGameboard(newComputerGameboard);
+
+    const renderShipsEvents = "renderShipsEvents";
+    injectedPubSub.publish(renderShipsEvents, { player, computer });
   }
 
   return {
@@ -275,3 +278,6 @@ export function gameFactory() {
     devDefaultInitialize,
   };
 }
+
+const game = gameFactory();
+game.devDefaultInitialize(PubSub);
