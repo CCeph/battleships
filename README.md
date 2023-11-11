@@ -14,3 +14,5 @@ Display the hit.
 Make the computer hit back.
 Decide when all ships are sank.
 Display a winner.
+
+Let the player know when it is their turn, when they keep playing, and when turns have been switched
