@@ -9,8 +9,7 @@ function createDOMCache() {
 
 const cachedDOM = createDOMCache();
 
-function renderGameboards(eventName, players) {
-  console.log(players);
+function renderShipboards(eventName, players) {
   const { computer, player } = players;
 
   const playerShipboard = player.getGameboard().getShipboard();
@@ -37,5 +36,35 @@ function renderGameboards(eventName, players) {
   });
 }
 
+function renderHitboards(eventName, players) {
+  const { computer, player } = players;
+
+  const playerHitboard = player.getGameboard().getHitboard();
+  const computerHitboard = computer.getGameboard().getHitboard();
+
+  playerHitboard.forEach((row, rowNumber) => {
+    row.forEach((val, valNumber) => {
+      if (val !== null) {
+        const divID = `${calculateBoardIndex(rowNumber, valNumber)}`;
+        const targetDiv = cachedDOM.$playerCellsList[divID];
+        targetDiv.textContent = "X";
+      }
+    });
+  });
+
+  computerHitboard.forEach((row, rowNumber) => {
+    row.forEach((val, valNumber) => {
+      if (val !== null) {
+        const divID = `${calculateBoardIndex(rowNumber, valNumber)}`;
+        const targetDiv = cachedDOM.$computerCellsList[divID];
+        targetDiv.textContent = "X";
+      }
+    });
+  });
+}
+
 const renderShipsEvents = "renderShipsEvents";
-PubSub.subscribe(renderShipsEvents, renderGameboards);
+PubSub.subscribe(renderShipsEvents, renderShipboards);
+
+const renderHitEvents = "renderHitEvents";
+PubSub.subscribe(renderHitEvents, renderHitboards);
