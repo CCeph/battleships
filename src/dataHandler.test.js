@@ -8,6 +8,11 @@ import {
 
 const allEqual = (arr) => arr.every((val) => val === arr[0]);
 
+const PubSub = {
+  publish: jest.fn(),
+  subscribe: jest.fn(),
+};
+
 test("Ship factory creates an object with correct length provided", () => {
   expect(createShip(4).getLength()).toBe(4);
 });
@@ -175,14 +180,6 @@ describe("Gameboard tests", () => {
   });
 
   describe("Tests for placing ships with pubsub mocks", () => {
-    let PubSub;
-    beforeEach(() => {
-      PubSub = {
-        publish: jest.fn(),
-        subscribe: jest.fn(),
-      };
-    });
-
     test("Gameboard, placing ships: Ships can't be placed on top of each other.", () => {
       const carrier = createShip(5);
       const cruiser = createShip(3);
@@ -317,11 +314,6 @@ describe("Player Tests", () => {
   });
 
   test("Player, updateGameboard: player's gameboard can be updated with a new one", () => {
-    const PubSub = {
-      publish: jest.fn(),
-      subscribe: jest.fn(),
-    };
-
     const player = playerFactory();
     const newGameboard = player.getGameboard();
 
@@ -427,12 +419,6 @@ describe("Computer Tests", () => {
   });
 
   test("Computer, updateGameboard: Computer's gameboard can be updated with a new one", () => {
-    const PubSub = {
-      publish: jest.fn(),
-      subscribe: jest.fn(),
-    };
-
-    const computer = computerFactory();
     const newGameboard = computer.getGameboard();
 
     const carrier = createShip(5);
@@ -471,7 +457,7 @@ describe("Game Tests", () => {
 
   test("Game, devInitialize: places player and computer ships in predefined coordinates", () => {
     const game = gameFactory();
-    game.devDefaultInitialize();
+    game.devDefaultInitialize(PubSub);
     const shipboard = game.getPlayer().getGameboard().getShipboard();
     const carrierArray = [
       shipboard[0][0],
