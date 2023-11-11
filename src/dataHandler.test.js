@@ -235,7 +235,7 @@ describe("Gameboard tests", () => {
     const cruiser = createShip(3);
     const playerGameboard = createGameboard();
     playerGameboard.placeShip(cruiser, [0, 0], "V");
-    playerGameboard.receiveAttack([0, 0]);
+    playerGameboard.receiveAttack([0, 0], PubSub);
     expect(playerGameboard.getHitboard()[0][0]).toBe("hit");
   });
 
@@ -243,7 +243,7 @@ describe("Gameboard tests", () => {
     const cruiser = createShip(3);
     const playerGameboard = createGameboard();
     playerGameboard.placeShip(cruiser, [2, 0], "V");
-    playerGameboard.receiveAttack([2, 0]);
+    playerGameboard.receiveAttack([2, 0], PubSub);
     expect(cruiser.getTotalHits()).toBe(1);
   });
 
@@ -251,8 +251,8 @@ describe("Gameboard tests", () => {
     const cruiser = createShip(3);
     const playerGameboard = createGameboard();
     playerGameboard.placeShip(cruiser, [2, 0], "V");
-    playerGameboard.receiveAttack([2, 0]);
-    playerGameboard.receiveAttack([2, 0]);
+    playerGameboard.receiveAttack([2, 0], PubSub);
+    playerGameboard.receiveAttack([2, 0], PubSub);
     expect(cruiser.getTotalHits()).toBe(1);
   });
 
@@ -262,9 +262,9 @@ describe("Gameboard tests", () => {
     const cruiser = createShip(3);
     const playerGameboard = createGameboard();
     playerGameboard.placeShip(cruiser, [2, 0], "V");
-    playerGameboard.receiveAttack([2, 0]);
-    playerGameboard.receiveAttack([2, 1]);
-    playerGameboard.receiveAttack([2, 2]);
+    playerGameboard.receiveAttack([2, 0], PubSub);
+    playerGameboard.receiveAttack([2, 1], PubSub);
+    playerGameboard.receiveAttack([2, 2], PubSub);
     const totalShips = playerGameboard.getTotalShips();
     expect(playerGameboard.isAllSunk(totalShips)).toBe(true);
   });
@@ -275,10 +275,10 @@ describe("Gameboard tests", () => {
     const playerGameboard = createGameboard();
     playerGameboard.placeShip(cruiser, [2, 0], "V");
     playerGameboard.placeShip(submarine, [8, 7], "H");
-    playerGameboard.receiveAttack([2, 0]);
-    playerGameboard.receiveAttack([2, 1]);
-    playerGameboard.receiveAttack([2, 2]);
-    playerGameboard.receiveAttack([8, 7]);
+    playerGameboard.receiveAttack([2, 0], PubSub);
+    playerGameboard.receiveAttack([2, 1], PubSub);
+    playerGameboard.receiveAttack([2, 2], PubSub);
+    playerGameboard.receiveAttack([8, 7], PubSub);
     const totalShips = playerGameboard.getTotalShips();
     expect(playerGameboard.isAllSunk(totalShips)).toBe(true);
   });
@@ -366,7 +366,7 @@ describe("Computer Tests", () => {
   });
 
   test("Computer, hitPlayer: choose a specific coordinate to hit for testing purposes", () => {
-    computer.hitPlayer(player, [0, 1]);
+    computer.hitPlayer(player, [0, 1], PubSub);
     expect(player.getGameboard().getHitboard()).toStrictEqual([
       [null, null, null, null, null, null, null, null, null, null],
       ["hit", null, null, null, null, null, null, null, null, null],
@@ -382,7 +382,7 @@ describe("Computer Tests", () => {
   });
 
   test("Computer, randomHitPlayer: chooses a random coordinate to hit", () => {
-    computer.randomHitPlayer(player);
+    computer.randomHitPlayer(player, PubSub);
     expect(player.getGameboard().getHitboard()).not.toStrictEqual([
       [null, null, null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null, null, null],
@@ -400,10 +400,10 @@ describe("Computer Tests", () => {
   test("Computer, randomHitPlayer: doesn't choose a coordinate that was already hit before", () => {
     for (let x = 0; x <= 9; x += 1) {
       for (let y = 0; y <= 8; y += 1) {
-        computer.hitPlayer(player, [x, y]);
+        computer.hitPlayer(player, [x, y], PubSub);
       }
     }
-    computer.randomHitPlayer(player);
+    computer.randomHitPlayer(player, PubSub);
     expect(player.getGameboard().getHitboard()[9]).not.toStrictEqual([
       null,
       null,

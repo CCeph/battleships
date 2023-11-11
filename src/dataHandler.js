@@ -121,7 +121,7 @@ export function createGameboard() {
     return allShips.every((ship) => ship.isSunk());
   }
 
-  function receiveAttack(position) {
+  function receiveAttack(position, injectedPubSub) {
     if (hitboard[position[1]][position[0]] === "hit") {
       return;
     }
@@ -129,6 +129,9 @@ export function createGameboard() {
     const storedShipboardValue = currentShipboard[position[1]][position[0]];
     if (storedShipboardValue !== null) {
       storedShipboardValue.hit();
+    } else {
+      const switchPlayersEvent = "switchPlayersEvent";
+      injectedPubSub.publish(switchPlayersEvent);
     }
     hitboard[position[1]][position[0]] = "hit";
   }
@@ -201,8 +204,8 @@ export function computerFactory(turnInput = "inactive") {
     gameboard = newGameboard;
   }
 
-  function hitPlayer(player, position) {
-    player.getGameboard().receiveAttack(position);
+  function hitPlayer(player, position, injectedPubSub) {
+    player.getGameboard().receiveAttack(position, injectedPubSub);
   }
 
   function getRandomInt(max) {
@@ -216,7 +219,7 @@ export function computerFactory(turnInput = "inactive") {
     return randomCoordinate;
   }
 
-  function randomHitPlayer(player) {
+  function randomHitPlayer(player, injectedPubSub) {
     let randomHitPosition = getRandomCoordinate(10, 10);
     let [randomX, randomY] = randomHitPosition;
 
@@ -224,7 +227,7 @@ export function computerFactory(turnInput = "inactive") {
       randomHitPosition = getRandomCoordinate(10, 10);
       [randomX, randomY] = randomHitPosition;
     }
-    player.getGameboard().receiveAttack(randomHitPosition);
+    player.getGameboard().receiveAttack(randomHitPosition, injectedPubSub);
   }
 
   return {
