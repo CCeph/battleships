@@ -129,9 +129,6 @@ export function createGameboard() {
     const storedShipboardValue = currentShipboard[position[1]][position[0]];
     if (storedShipboardValue !== null) {
       storedShipboardValue.hit();
-    } else {
-      const switchPlayersEvent = "switchPlayersEvent";
-      injectedPubSub.publish(switchPlayersEvent);
     }
     hitboard[position[1]][position[0]] = "hit";
   }
@@ -289,17 +286,9 @@ export function gameFactory() {
     PubSub.publish(renderHitEvents, { player, computer });
   }
 
-  function switchPlayers() {
-    player.switchTurns();
-    computer.switchTurns();
-  }
-
   function listenToEvents() {
     const computerHitEvent = "computerHitEvent";
     PubSub.subscribe(computerHitEvent, hitComputer);
-
-    const switchPlayersEvent = "switchPlayersEvent";
-    PubSub.subscribe(switchPlayersEvent, switchPlayers);
   }
 
   return {
