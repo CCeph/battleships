@@ -9,9 +9,9 @@ Test player input for overlapping ships.
 Place ships.
 Display placed ships.
 Allow computer to place ships randomly while following the rules.
-Accept player hit input.
-Display the hit.
-Make the computer hit back.
+(Done) Accept player hit input.
+(Done) Display the hit.
+(Done) Make the computer hit back.
 Decide when all ships are sank.
 Display a winner.
 
