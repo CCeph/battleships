@@ -227,12 +227,24 @@ export function computerFactory(turnInput = "inactive") {
     player.getGameboard().receiveAttack(randomHitPosition, injectedPubSub);
   }
 
+  function getValidRandomHitCoordinates(player) {
+    let randomHitPosition = getRandomCoordinate(10, 10);
+    let [randomX, randomY] = randomHitPosition;
+
+    while (player.getGameboard().getHitboard()[randomY][randomX] === "hit") {
+      randomHitPosition = getRandomCoordinate(10, 10);
+      [randomX, randomY] = randomHitPosition;
+    }
+    return randomHitPosition;
+  }
+
   return {
     getTurnStatus,
     switchTurns,
     getGameboard,
     updateGameboard,
     randomHitPlayer,
+    getValidRandomHitCoordinates,
     hitPlayer,
   };
 }
@@ -275,20 +287,68 @@ export function gameFactory() {
     injectedPubSub.publish(renderShipsEvents, { player, computer });
   }
 
-  function hitComputer(eventName, $hitCell) {
+  function switchComputerTurns() {
+    player.switchTurns();
+    computer.switchTurns();
+  }
+
+  function computerHitController() {
+    if (computer.getTurnStatus() === "inactive") {
+      return;
+    }
+
+    let [x, y] = computer.getValidRandomHitCoordinates(player);
+    const newPlayerGameboard = player.getGameboard();
+
+    // If there is a ship at coordinate, hit + hit again
+    while (player.getGameboard().getShipboard()[y][x] !== null) {
+      newPlayerGameboard.receiveAttack([x, y], PubSub);
+
+      [x, y] = computer.getValidRandomHitCoordinates(player);
+    }
+
+    // If there is no ship at coordinate, hit + switch turns
+    newPlayerGameboard.receiveAttack([x, y], PubSub);
+
+    const renderHitEvents = "renderHitEvents";
+    PubSub.publish(renderHitEvents, { player, computer });
+
+    switchComputerTurns();
+  }
+
+  function switchPlayerTurns() {
+    player.switchTurns();
+    computer.switchTurns();
+
+    computerHitController();
+  }
+
+  function playerHitController(eventName, $hitCell) {
     if (player.getTurnStatus() === "inactive") {
       return;
     }
+
     const [x, y] = convertIndexToCoordinates($hitCell.id);
     const newGameboard = computer.getGameboard();
-    newGameboard.receiveAttack([x, y], PubSub);
+
+    // If there is a ship at coordinate, hit
+    if (computer.getGameboard().getShipboard()[y][x] !== null) {
+      newGameboard.receiveAttack([x, y], PubSub);
+    }
+
+    // If there is no ship at coordinate, hit + switch turns
+    if (computer.getGameboard().getShipboard()[y][x] === null) {
+      newGameboard.receiveAttack([x, y], PubSub);
+      switchPlayerTurns();
+    }
+
     const renderHitEvents = "renderHitEvents";
     PubSub.publish(renderHitEvents, { player, computer });
   }
 
   function listenToEvents() {
     const computerHitEvent = "computerHitEvent";
-    PubSub.subscribe(computerHitEvent, hitComputer);
+    PubSub.subscribe(computerHitEvent, playerHitController);
   }
 
   return {
