@@ -6,7 +6,13 @@ function createDOMCache() {
   );
   const $playerCellsList = document.querySelectorAll(".player .boardCell");
   const $computerCellsList = document.querySelectorAll(".computer .boardCell");
-  return { $placeShipsForm, $playerCellsList, $computerCellsList };
+  const $resetButton = document.querySelector("[data-resetGame]");
+  return {
+    $placeShipsForm,
+    $playerCellsList,
+    $computerCellsList,
+    $resetButton,
+  };
 }
 
 const cachedDOM = createDOMCache();
@@ -89,6 +95,11 @@ function listenToInputs() {
       const computerHitEvent = "computerHitEvent";
       PubSub.publish(computerHitEvent, cell);
     });
+  });
+
+  cachedDOM.$resetButton.addEventListener("click", () => {
+    const resetGameEvent = "resetGameEvent";
+    PubSub.publish(resetGameEvent);
   });
 }
 

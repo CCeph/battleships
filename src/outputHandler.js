@@ -18,9 +18,10 @@ function renderShipboards(eventName, players) {
 
   playerShipboard.forEach((row, rowNumber) => {
     row.forEach((val, valNumber) => {
+      const divID = `${calculateBoardIndex(rowNumber, valNumber)}`;
+      const targetDiv = cachedDOM.$playerCellsList[divID];
+      targetDiv.classList.remove("occupied");
       if (val !== null) {
-        const divID = `${calculateBoardIndex(rowNumber, valNumber)}`;
-        const targetDiv = cachedDOM.$playerCellsList[divID];
         targetDiv.classList.add("occupied");
       }
     });
@@ -28,9 +29,10 @@ function renderShipboards(eventName, players) {
 
   computerShipboard.forEach((row, rowNumber) => {
     row.forEach((val, valNumber) => {
+      const divID = `${calculateBoardIndex(rowNumber, valNumber)}`;
+      const targetDiv = cachedDOM.$computerCellsList[divID];
+      targetDiv.classList.remove("occupied");
       if (val !== null) {
-        const divID = `${calculateBoardIndex(rowNumber, valNumber)}`;
-        const targetDiv = cachedDOM.$computerCellsList[divID];
         targetDiv.classList.add("occupied");
       }
     });
@@ -45,9 +47,10 @@ function renderHitboards(eventName, players) {
 
   playerHitboard.forEach((row, rowNumber) => {
     row.forEach((val, valNumber) => {
+      const divID = `${calculateBoardIndex(rowNumber, valNumber)}`;
+      const targetDiv = cachedDOM.$playerCellsList[divID];
+      targetDiv.textContent = "";
       if (val !== null) {
-        const divID = `${calculateBoardIndex(rowNumber, valNumber)}`;
-        const targetDiv = cachedDOM.$playerCellsList[divID];
         targetDiv.textContent = "X";
       }
     });
@@ -55,9 +58,10 @@ function renderHitboards(eventName, players) {
 
   computerHitboard.forEach((row, rowNumber) => {
     row.forEach((val, valNumber) => {
+      const divID = `${calculateBoardIndex(rowNumber, valNumber)}`;
+      const targetDiv = cachedDOM.$computerCellsList[divID];
+      targetDiv.textContent = "";
       if (val !== null) {
-        const divID = `${calculateBoardIndex(rowNumber, valNumber)}`;
-        const targetDiv = cachedDOM.$computerCellsList[divID];
         targetDiv.textContent = "X";
       }
     });

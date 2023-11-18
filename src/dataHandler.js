@@ -250,8 +250,8 @@ export function computerFactory(turnInput = "inactive") {
 }
 
 export function gameFactory() {
-  const player = playerFactory();
-  const computer = computerFactory();
+  let player = playerFactory();
+  let computer = computerFactory();
 
   function getPlayer() {
     return player;
@@ -259,6 +259,17 @@ export function gameFactory() {
 
   function getComputer() {
     return computer;
+  }
+
+  function resetGame() {
+    player = playerFactory();
+    computer = computerFactory();
+    const renderShipsEvents = "renderShipsEvents";
+    PubSub.publish(renderShipsEvents, { player, computer });
+
+    const renderHitEvents = "renderHitEvents";
+    PubSub.publish(renderHitEvents, { player, computer });
+    // !!!Reinitialize game: allow player & computer to pick ships
   }
 
   function devDefaultInitialize(injectedPubSub) {
@@ -388,9 +399,13 @@ export function gameFactory() {
     getComputer,
     devDefaultInitialize,
     listenToEvents,
+    resetGame,
   };
 }
 
 const game = gameFactory();
 game.devDefaultInitialize(PubSub);
 game.listenToEvents();
+
+const resetGameEvent = "resetGameEvent";
+PubSub.subscribe(resetGameEvent, game.resetGame);
