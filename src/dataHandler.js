@@ -323,7 +323,7 @@ export function gameFactory() {
     computerHitController();
   }
 
-  function playerHitController(eventName, $hitCell) {
+  function playerAttackController(eventName, $hitCell) {
     if (player.getTurnStatus() === "inactive") {
       return;
     }
@@ -348,7 +348,7 @@ export function gameFactory() {
 
   function listenToEvents() {
     const computerHitEvent = "computerHitEvent";
-    PubSub.subscribe(computerHitEvent, playerHitController);
+    PubSub.subscribe(computerHitEvent, playerAttackController);
   }
 
   return {
