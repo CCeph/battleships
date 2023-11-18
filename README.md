@@ -14,5 +14,6 @@ Allow computer to place ships randomly while following the rules.
 (Done) Make the computer hit back.
 Decide when all ships are sank.
 Display a winner.
+Allow the game to be reset
 
 Let the player know when it is their turn, when they keep playing, and when turns have been switched
