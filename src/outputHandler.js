@@ -4,7 +4,8 @@ import { calculateBoardIndex } from "./commonUtils";
 function createDOMCache() {
   const $playerCellsList = document.querySelectorAll(".player .boardCell");
   const $computerCellsList = document.querySelectorAll(".computer .boardCell");
-  return { $playerCellsList, $computerCellsList };
+  const $gameStatus = document.querySelector("[data-gameStatus]");
+  return { $playerCellsList, $computerCellsList, $gameStatus };
 }
 
 const cachedDOM = createDOMCache();
@@ -63,8 +64,16 @@ function renderHitboards(eventName, players) {
   });
 }
 
+function renderPlayerWin() {
+  const gameStatusTitle = cachedDOM.$gameStatus;
+  gameStatusTitle.textContent = "Player Wins!";
+}
+
 const renderShipsEvents = "renderShipsEvents";
 PubSub.subscribe(renderShipsEvents, renderShipboards);
 
 const renderHitEvents = "renderHitEvents";
 PubSub.subscribe(renderHitEvents, renderHitboards);
+
+const playerWinEvent = "playerWinEvent";
+PubSub.subscribe(playerWinEvent, renderPlayerWin);
