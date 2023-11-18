@@ -69,6 +69,11 @@ function renderPlayerWin() {
   gameStatusTitle.textContent = "Player Wins!";
 }
 
+function renderComputerWin() {
+  const gameStatusTitle = cachedDOM.$gameStatus;
+  gameStatusTitle.textContent = "Computer Wins!";
+}
+
 const renderShipsEvents = "renderShipsEvents";
 PubSub.subscribe(renderShipsEvents, renderShipboards);
 
@@ -77,3 +82,6 @@ PubSub.subscribe(renderHitEvents, renderHitboards);
 
 const playerWinEvent = "playerWinEvent";
 PubSub.subscribe(playerWinEvent, renderPlayerWin);
+
+const computerWinEvent = "computerWinEvent";
+PubSub.subscribe(computerWinEvent, renderComputerWin);

@@ -276,12 +276,18 @@ export function gameFactory() {
     updatedPlayerGameboard.placeShip(submarine, [0, 3], "H", PubSub);
     updatedPlayerGameboard.placeShip(destroyer, [0, 4], "H", PubSub);
 
+    const computerCarrier = createShip(5, "carrier");
+    const computerBattleship = createShip(4, "battleship");
+    const computerCruiser = createShip(3, "cruiser");
+    const computerSubmarine = createShip(3, "submarine");
+    const computerDestroyer = createShip(2, "destroyer");
+
     const updatedComputerGameboard = computer.getGameboard();
-    updatedComputerGameboard.placeShip(carrier, [0, 0], "H", PubSub);
-    updatedComputerGameboard.placeShip(battleship, [0, 1], "H", PubSub);
-    updatedComputerGameboard.placeShip(cruiser, [0, 2], "H", PubSub);
-    updatedComputerGameboard.placeShip(submarine, [0, 3], "H", PubSub);
-    updatedComputerGameboard.placeShip(destroyer, [0, 4], "H", PubSub);
+    updatedComputerGameboard.placeShip(computerCarrier, [0, 0], "H", PubSub);
+    updatedComputerGameboard.placeShip(computerBattleship, [0, 1], "H", PubSub);
+    updatedComputerGameboard.placeShip(computerCruiser, [0, 2], "H", PubSub);
+    updatedComputerGameboard.placeShip(computerSubmarine, [0, 3], "H", PubSub);
+    updatedComputerGameboard.placeShip(computerDestroyer, [0, 4], "H", PubSub);
 
     const renderShipsEvents = "renderShipsEvents";
     injectedPubSub.publish(renderShipsEvents, { player, computer });
@@ -297,12 +303,26 @@ export function gameFactory() {
       return;
     }
 
+    if (
+      computer.getGameboard().isAllSunk() ||
+      player.getGameboard().isAllSunk()
+    ) {
+      return;
+    }
+
     let [x, y] = computer.getValidRandomHitCoordinates(player);
     const newPlayerGameboard = player.getGameboard();
 
     // If there is a ship at coordinate, hit + hit again
     while (player.getGameboard().getShipboard()[y][x] !== null) {
       newPlayerGameboard.receiveAttack([x, y], PubSub);
+
+      // Checks if computer won
+      if (newPlayerGameboard.isAllSunk()) {
+        const computerWinEvent = "computerWinEvent";
+        PubSub.publish(computerWinEvent);
+        break;
+      }
 
       [x, y] = computer.getValidRandomHitCoordinates(player);
     }
@@ -331,8 +351,11 @@ export function gameFactory() {
     const [x, y] = convertIndexToCoordinates($hitCell.id);
     const newGameboard = computer.getGameboard();
 
-    // Checks if the game is already won by the player
-    if (newGameboard.isAllSunk()) {
+    // Checks if the game is already won
+    if (
+      computer.getGameboard().isAllSunk() ||
+      player.getGameboard().isAllSunk()
+    ) {
       return;
     }
 
