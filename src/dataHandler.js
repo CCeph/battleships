@@ -117,8 +117,8 @@ export function createGameboard() {
     appendShipToTotal(ship);
   }
 
-  function isAllSunk(allShips) {
-    return allShips.every((ship) => ship.isSunk());
+  function isAllSunk() {
+    return totalShips.every((ship) => ship.isSunk());
   }
 
   function receiveAttack(position) {
@@ -331,7 +331,7 @@ export function gameFactory() {
     const [x, y] = convertIndexToCoordinates($hitCell.id);
     const newGameboard = computer.getGameboard();
 
-    // If there is a ship at coordinate, hit
+    // If there is a ship at coordinate, hit + check if all ships sank + keep turn
     if (computer.getGameboard().getShipboard()[y][x] !== null) {
       newGameboard.receiveAttack([x, y], PubSub);
     }

@@ -265,8 +265,7 @@ describe("Gameboard tests", () => {
     playerGameboard.receiveAttack([2, 0], PubSub);
     playerGameboard.receiveAttack([2, 1], PubSub);
     playerGameboard.receiveAttack([2, 2], PubSub);
-    const totalShips = playerGameboard.getTotalShips();
-    expect(playerGameboard.isAllSunk(totalShips)).toBe(true);
+    expect(playerGameboard.isAllSunk()).toBe(true);
   });
 
   test("Gameboard, isAllSunk: works with 2 ships", () => {
@@ -279,8 +278,15 @@ describe("Gameboard tests", () => {
     playerGameboard.receiveAttack([2, 1], PubSub);
     playerGameboard.receiveAttack([2, 2], PubSub);
     playerGameboard.receiveAttack([8, 7], PubSub);
-    const totalShips = playerGameboard.getTotalShips();
-    expect(playerGameboard.isAllSunk(totalShips)).toBe(true);
+    expect(playerGameboard.isAllSunk()).toBe(true);
+  });
+
+  test("Gameboard, isAllSunk: returns false if not all ships are sank", () => {
+    const cruiser = createShip(3);
+    const playerGameboard = createGameboard();
+    playerGameboard.placeShip(cruiser, [2, 0], "V");
+    playerGameboard.receiveAttack([2, 0], PubSub);
+    expect(playerGameboard.isAllSunk()).toBe(false);
   });
 });
 
@@ -512,5 +518,6 @@ describe("Game Tests", () => {
   });
 });
 
+test.skip("Test getTotalShips", () => {});
 test.skip("Side-effect of bad ship placement: Clear the board", () => {});
 test.skip("Side-effect of bad ship placement: Inform user to repeat input after clearing the board.", () => {});
