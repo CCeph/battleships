@@ -121,7 +121,7 @@ export function createGameboard() {
     return allShips.every((ship) => ship.isSunk());
   }
 
-  function receiveAttack(position, injectedPubSub) {
+  function receiveAttack(position) {
     if (hitboard[position[1]][position[0]] === "hit") {
       return;
     }
