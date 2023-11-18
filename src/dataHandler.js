@@ -328,12 +328,13 @@ export function gameFactory() {
       return;
     }
 
-    if (computer.getGameboard().isAllSunk()) {
-      return;
-    }
-
     const [x, y] = convertIndexToCoordinates($hitCell.id);
     const newGameboard = computer.getGameboard();
+
+    // Checks if the game is already won by the player
+    if (newGameboard.isAllSunk()) {
+      return;
+    }
 
     // If there is a ship at coordinate, hit + check if all ships sank + keep turn
     if (computer.getGameboard().getShipboard()[y][x] !== null) {
