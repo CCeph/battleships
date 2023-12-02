@@ -7,3 +7,23 @@ export function convertIndexToCoordinates(index) {
   const y = Math.floor(index / 10);
   return [x, y];
 }
+
+export function checkValidBounds(shipPlacement, shipLength) {
+  let valid = true;
+
+  if (shipPlacement.alignment === "V") {
+    if (shipPlacement.Y > 10 - shipLength) {
+      valid = false;
+      return valid;
+    }
+  }
+
+  if (shipPlacement.alignment === "H") {
+    if (shipPlacement.X > 10 - shipLength) {
+      valid = false;
+      return valid;
+    }
+  }
+
+  return valid;
+}

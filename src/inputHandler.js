@@ -1,4 +1,5 @@
 import PubSub from "pubsub-js";
+import { checkValidBounds } from "./commonUtils";
 
 function createDOMCache() {
   const $placeShipsForm = document.querySelector(
@@ -79,12 +80,55 @@ function getShipValues(shipElements) {
   return shipValues;
 }
 
+function getShipLengthByName(shipName) {
+  let length = null;
+  switch (shipName) {
+    case "carrier":
+      length = 5;
+      break;
+    case "battleship":
+      length = 4;
+      break;
+    case "cruiser":
+      length = 3;
+      break;
+    case "submarine":
+      length = 3;
+      break;
+    case "destroyer":
+      length = 2;
+      break;
+    default:
+      console.error("Error in ship name");
+  }
+  return length;
+}
+
+function checkValidShipPlacement(shipInput) {
+  const shipArray = Object.entries(shipInput);
+  const valid = shipArray.every((ship) => {
+    const shipName = ship[0];
+    const shipPlacement = ship[1];
+    const shipLength = getShipLengthByName(shipName);
+
+    const validBounds = checkValidBounds(shipPlacement, shipLength);
+    if (validBounds === true) {
+      return true;
+    }
+    return false;
+  });
+  return valid;
+}
+
 function listenToInputs() {
   cachedDOM.$placeShipsForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const inputElements = getShipInputElements();
     const shipValues = getShipValues(inputElements);
-    console.log(shipValues);
+    if (checkValidShipPlacement(shipValues)) {
+      // !!!Implement a visible error to client here
+      console.log("Invalid ship placement. Please try again");
+    }
 
     const shipsInputEvent = "shipsInputEvent";
     PubSub.publish(shipsInputEvent, shipValues);
