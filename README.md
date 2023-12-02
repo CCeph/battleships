@@ -6,7 +6,7 @@ A web game for battleships. The goal of this project is to practice coding with 
 
 Optional: Check all inputs were sent regardless of the fact that all are required.
 (Done) Test player input for going out of bounds.
-Test player input for overlapping ships.
+(Done) Test player input for overlapping ships.
 Place ships.
 Display placed ships.
 Allow computer to place ships randomly while following the rules.
