@@ -161,8 +161,8 @@ function listenToInputs() {
     const inputElements = getShipInputElements();
     const shipValues = getShipValues(inputElements);
     if (checkValidShipPlacement(shipValues) === false) {
-      // !!!Implement a visible error to client here
-      console.log("Invalid ship placement. Please try again");
+      const badShipPlacementEvent = "badShipPlacementEvent";
+      PubSub.publish(badShipPlacementEvent);
       return;
     }
 

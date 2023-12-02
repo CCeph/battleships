@@ -78,6 +78,12 @@ function renderComputerWin() {
   gameStatusTitle.textContent = "Computer Wins!";
 }
 
+function renderBadShipPlacement(eventName) {
+  const gameStatusTitle = cachedDOM.$gameStatus;
+  gameStatusTitle.textContent =
+    "Ships were placed incorrectly. Please try again.";
+}
+
 const renderShipsEvents = "renderShipsEvents";
 PubSub.subscribe(renderShipsEvents, renderShipboards);
 
@@ -89,3 +95,6 @@ PubSub.subscribe(playerWinEvent, renderPlayerWin);
 
 const computerWinEvent = "computerWinEvent";
 PubSub.subscribe(computerWinEvent, renderComputerWin);
+
+const badShipPlacementEvent = "badShipPlacementEvent";
+PubSub.subscribe(badShipPlacementEvent, renderBadShipPlacement);
