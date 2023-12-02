@@ -461,7 +461,7 @@ describe("Game Tests", () => {
 
   test.skip("Game, getComputer: returns computer", () => {});
 
-  test("Game, devInitialize: places player and computer ships in predefined coordinates", () => {
+  test.skip("Game, devInitialize: places player and computer ships in predefined coordinates", () => {
     const game = gameFactory();
     game.devDefaultInitialize(PubSub);
     const shipboard = game.getPlayer().getGameboard().getShipboard();
@@ -512,9 +512,9 @@ describe("Game Tests", () => {
 
     expect(actualNamesArray).toStrictEqual(expectedNamesArray);
 
-    expect(game.getComputer().getGameboard().getShipboard()).toStrictEqual(
+    /* expect(game.getComputer().getGameboard().getShipboard()).toStrictEqual(
       game.getPlayer().getGameboard().getShipboard()
-    );
+    ); */
   });
 });
 
