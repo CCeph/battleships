@@ -104,15 +104,50 @@ function getShipLengthByName(shipName) {
   return length;
 }
 
+function checkNoOverlap(shipPlacement, shipLength, mockShipboard) {
+  const mockShipboardCopy = [...mockShipboard];
+  const currentPosition = [Number(shipPlacement.X), Number(shipPlacement.Y)];
+  for (let i = 0; i < shipLength; i += 1) {
+    if (mockShipboardCopy[currentPosition[1]][currentPosition[0]] !== null) {
+      return { valid: false, mockShipboardCopy };
+    }
+    mockShipboardCopy[currentPosition[1]][currentPosition[0]] = shipLength;
+    if (shipPlacement.alignment === "H") {
+      currentPosition[0] += 1;
+    } else if (shipPlacement.alignment === "V") {
+      currentPosition[1] += 1;
+    }
+  }
+  return { valid: true, mockShipboardCopy };
+}
+
 function checkValidShipPlacement(shipInput) {
   const shipArray = Object.entries(shipInput);
+  let mockShipboard = [
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+  ];
   const valid = shipArray.every((ship) => {
     const shipName = ship[0];
     const shipPlacement = ship[1];
     const shipLength = getShipLengthByName(shipName);
 
     const validBounds = checkValidBounds(shipPlacement, shipLength);
-    if (validBounds === true) {
+    const validNoOverlap = checkNoOverlap(
+      shipPlacement,
+      shipLength,
+      mockShipboard
+    );
+    mockShipboard = validNoOverlap.mockShipboardCopy;
+    if (validBounds === true && validNoOverlap.valid === true) {
       return true;
     }
     return false;
@@ -125,9 +160,10 @@ function listenToInputs() {
     e.preventDefault();
     const inputElements = getShipInputElements();
     const shipValues = getShipValues(inputElements);
-    if (checkValidShipPlacement(shipValues)) {
+    if (checkValidShipPlacement(shipValues) === false) {
       // !!!Implement a visible error to client here
       console.log("Invalid ship placement. Please try again");
+      return;
     }
 
     const shipsInputEvent = "shipsInputEvent";
