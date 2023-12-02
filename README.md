@@ -4,6 +4,7 @@ A web game for battleships. The goal of this project is to practice coding with 
 
 # Remaining Tasks
 
+Optional: Check all inputs were sent regardless of the fact that all are required.
 Test player input for going out of bounds.
 Test player input for overlapping ships.
 Place ships.
