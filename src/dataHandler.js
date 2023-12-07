@@ -246,6 +246,7 @@ export function computerFactory(turnInput = "inactive") {
     randomHitPlayer,
     getValidRandomHitCoordinates,
     hitPlayer,
+    getRandomCoordinate,
   };
 }
 
@@ -310,7 +311,6 @@ export function gameFactory() {
     const cruiser = createShip(3, "cruiser");
     const submarine = createShip(3, "submarine");
     const destroyer = createShip(2, "destroyer");
-    console.log(carrier.getLength());
 
     const playerGameboard = player.getGameboard();
 
@@ -346,8 +346,81 @@ export function gameFactory() {
     );
   }
 
+  function getRandomAlignment() {
+    let shipAlignment;
+    if (Math.random() >= 0.5) {
+      shipAlignment = "H";
+    } else {
+      shipAlignment = "V";
+    }
+    return shipAlignment;
+  }
+
+  function checkNoOverlap(startingPosition, shipAlignment, shipLength) {
+    const currentPosition = [...startingPosition];
+    const shipboard = computer.getGameboard().getShipboard();
+    for (let i = 0; i < shipLength; i += 1) {
+      if (shipboard[currentPosition[1]][currentPosition[0]] !== null) {
+        return false;
+      }
+      if (shipAlignment === "H") {
+        currentPosition[0] += 1;
+      } else {
+        currentPosition[1] += 1;
+      }
+    }
+    return true;
+  }
+
+  function getRandomPlacement(ship) {
+    const shipLength = ship.getLength();
+    const shipAlignment = getRandomAlignment();
+    let maxX = 10;
+    let maxY = 10;
+    if (shipAlignment === "H") {
+      maxX = 10 - shipLength;
+    } else if (shipAlignment === "V") {
+      maxY = 10 - shipLength;
+    }
+    let randomInBoundCoordinate = computer.getRandomCoordinate(maxX, maxY);
+
+    while (
+      !checkNoOverlap(randomInBoundCoordinate, shipAlignment, shipLength)
+    ) {
+      randomInBoundCoordinate = computer.getRandomCoordinate(maxX, maxY);
+    }
+
+    return { randomInBoundCoordinate, shipAlignment };
+  }
+
+  function randomlyPlaceShipOnComputer(ship) {
+    const shipPlacement = getRandomPlacement(ship);
+    const computerGameboard = computer.getGameboard();
+    computerGameboard.placeShip(
+      ship,
+      shipPlacement.randomInBoundCoordinate,
+      shipPlacement.shipAlignment,
+      PubSub
+    );
+  }
+
+  function initializeComputer() {
+    const computerCarrier = createShip(5, "carrier");
+    const computerBattleship = createShip(4, "battleship");
+    const computerCruiser = createShip(3, "cruiser");
+    const computerSubmarine = createShip(3, "submarine");
+    const computerDestroyer = createShip(2, "destroyer");
+    randomlyPlaceShipOnComputer(computerCarrier);
+    randomlyPlaceShipOnComputer(computerBattleship);
+    randomlyPlaceShipOnComputer(computerCruiser);
+    randomlyPlaceShipOnComputer(computerSubmarine);
+    randomlyPlaceShipOnComputer(computerDestroyer);
+    console.log(computer.getGameboard().getShipboard());
+  }
+
   function initializeWithInputs(eventName, shipValues) {
     initializePlayer(shipValues);
+    initializeComputer();
     const renderShipsEvents = "renderShipsEvents";
     PubSub.publish(renderShipsEvents, { player, computer });
   }
