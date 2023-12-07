@@ -304,6 +304,54 @@ export function gameFactory() {
     injectedPubSub.publish(renderShipsEvents, { player, computer });
   }
 
+  function initializePlayer(shipValues) {
+    const carrier = createShip(5, "carrier");
+    const battleship = createShip(4, "battleship");
+    const cruiser = createShip(3, "cruiser");
+    const submarine = createShip(3, "submarine");
+    const destroyer = createShip(2, "destroyer");
+    console.log(carrier.getLength());
+
+    const playerGameboard = player.getGameboard();
+
+    playerGameboard.placeShip(
+      carrier,
+      [Number(shipValues.carrier.X), Number(shipValues.carrier.Y)],
+      shipValues.carrier.alignment,
+      PubSub
+    );
+    playerGameboard.placeShip(
+      battleship,
+      [Number(shipValues.battleship.X), Number(shipValues.battleship.Y)],
+      shipValues.battleship.alignment,
+      PubSub
+    );
+    playerGameboard.placeShip(
+      cruiser,
+      [Number(shipValues.cruiser.X), Number(shipValues.cruiser.Y)],
+      shipValues.cruiser.alignment,
+      PubSub
+    );
+    playerGameboard.placeShip(
+      submarine,
+      [Number(shipValues.submarine.X), Number(shipValues.submarine.Y)],
+      shipValues.submarine.alignment,
+      PubSub
+    );
+    playerGameboard.placeShip(
+      destroyer,
+      [Number(shipValues.destroyer.X), Number(shipValues.destroyer.Y)],
+      shipValues.destroyer.alignment,
+      PubSub
+    );
+  }
+
+  function initializeWithInputs(eventName, shipValues) {
+    initializePlayer(shipValues);
+    const renderShipsEvents = "renderShipsEvents";
+    PubSub.publish(renderShipsEvents, { player, computer });
+  }
+
   function switchComputerTurns() {
     player.switchTurns();
     computer.switchTurns();
@@ -400,12 +448,15 @@ export function gameFactory() {
     devDefaultInitialize,
     listenToEvents,
     resetGame,
+    initializeWithInputs,
   };
 }
 
 const game = gameFactory();
-game.devDefaultInitialize(PubSub);
 game.listenToEvents();
 
 const resetGameEvent = "resetGameEvent";
 PubSub.subscribe(resetGameEvent, game.resetGame);
+
+const shipsInputEvent = "shipsInputEvent";
+PubSub.subscribe(shipsInputEvent, game.initializeWithInputs);
