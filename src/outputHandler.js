@@ -106,7 +106,7 @@ function renderComputerWin() {
     "Computer Wins! Click 'Reset Game' to Play Again";
 }
 
-function renderBadShipPlacement(eventName) {
+function renderBadShipPlacement() {
   const gameStatusTitle = cachedDOM.$gameStatus;
   gameStatusTitle.textContent =
     "Ships were placed incorrectly. Please try again.";
