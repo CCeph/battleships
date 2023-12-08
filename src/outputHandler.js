@@ -5,7 +5,8 @@ function createDOMCache() {
   const $playerCellsList = document.querySelectorAll(".player .boardCell");
   const $computerCellsList = document.querySelectorAll(".computer .boardCell");
   const $gameStatus = document.querySelector("[data-gameStatus]");
-  return { $playerCellsList, $computerCellsList, $gameStatus };
+  const $shipsInputForm = document.querySelector("[data-ships-input-form]");
+  return { $playerCellsList, $computerCellsList, $gameStatus, $shipsInputForm };
 }
 
 const cachedDOM = createDOMCache();
@@ -15,6 +16,11 @@ function renderShipboards(eventName, players) {
 
   const playerShipboard = player.getGameboard().getShipboard();
   const computerShipboard = computer.getGameboard().getShipboard();
+  const shipsInputForm = cachedDOM.$shipsInputForm;
+  const gameStatus = cachedDOM.$gameStatus;
+
+  shipsInputForm.classList.add("hide");
+  gameStatus.textContent = "The game has started!";
 
   playerShipboard.forEach((row, rowNumber) => {
     row.forEach((val, valNumber) => {
@@ -70,18 +76,28 @@ function renderHitboards(eventName, players) {
 
 function renderPlayerWin() {
   const gameStatusTitle = cachedDOM.$gameStatus;
-  gameStatusTitle.textContent = "Player Wins!";
+  gameStatusTitle.textContent =
+    "Player Wins!  Click 'Reset Game' to Play Again";
 }
 
 function renderComputerWin() {
   const gameStatusTitle = cachedDOM.$gameStatus;
-  gameStatusTitle.textContent = "Computer Wins!";
+  gameStatusTitle.textContent =
+    "Computer Wins! Click 'Reset Game' to Play Again";
 }
 
 function renderBadShipPlacement(eventName) {
   const gameStatusTitle = cachedDOM.$gameStatus;
   gameStatusTitle.textContent =
     "Ships were placed incorrectly. Please try again.";
+}
+
+function renderDefaultStatus() {
+  const gameStatusTitle = cachedDOM.$gameStatus;
+  gameStatusTitle.textContent = "Place your ships";
+
+  const shipsInputForm = cachedDOM.$shipsInputForm;
+  shipsInputForm.classList.remove("hide");
 }
 
 const renderShipsEvents = "renderShipsEvents";
@@ -98,3 +114,6 @@ PubSub.subscribe(computerWinEvent, renderComputerWin);
 
 const badShipPlacementEvent = "badShipPlacementEvent";
 PubSub.subscribe(badShipPlacementEvent, renderBadShipPlacement);
+
+const renderDefaultStatusEvent = "renderDefaultStatus";
+PubSub.subscribe(renderDefaultStatusEvent, renderDefaultStatus);

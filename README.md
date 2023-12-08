@@ -18,5 +18,6 @@ Optional: Check all inputs were sent regardless of the fact that all are require
 (Done) Allow the game to be reset
 Hide input section when game is not reset
 Hide Computer ships
+Fix bug where player clicking a hit position passes their turn
 
 Let the player know when it is their turn, when they keep playing, and when turns have been switched

@@ -96,6 +96,12 @@ body {
 .placeShipsForm {
   width: 850px;
   margin: 3rem auto 3rem auto;
+  transition: opacity 1s ease-in-out;
+}
+
+.placeShipsForm.hide {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .placementGrid {

@@ -270,6 +270,9 @@ export function gameFactory() {
 
     const renderHitEvents = "renderHitEvents";
     PubSub.publish(renderHitEvents, { player, computer });
+
+    const renderDefaultStatusEvent = "renderDefaultStatus";
+    PubSub.publish(renderDefaultStatusEvent);
     // !!!Reinitialize game: allow player & computer to pick ships
   }
 
