@@ -45,6 +45,26 @@ function renderShipboards(eventName, players) {
   });
 }
 
+function renderPlayerShipboard(eventName, player) {
+  const playerShipboard = player.getGameboard().getShipboard();
+  const shipsInputForm = cachedDOM.$shipsInputForm;
+  const gameStatus = cachedDOM.$gameStatus;
+
+  shipsInputForm.classList.add("hide");
+  gameStatus.textContent = "The game has started!";
+
+  playerShipboard.forEach((row, rowNumber) => {
+    row.forEach((val, valNumber) => {
+      const divID = `${calculateBoardIndex(rowNumber, valNumber)}`;
+      const targetDiv = cachedDOM.$playerCellsList[divID];
+      targetDiv.classList.remove("occupied");
+      if (val !== null) {
+        targetDiv.classList.add("occupied");
+      }
+    });
+  });
+}
+
 function renderHitboards(eventName, players) {
   const { computer, player } = players;
 
@@ -102,6 +122,9 @@ function renderDefaultStatus() {
 
 const renderShipsEvents = "renderShipsEvents";
 PubSub.subscribe(renderShipsEvents, renderShipboards);
+
+const renderPlayerShips = "renderPlayerShips";
+PubSub.subscribe(renderPlayerShips, renderPlayerShipboard);
 
 const renderHitEvents = "renderHitEvents";
 PubSub.subscribe(renderHitEvents, renderHitboards);

@@ -424,8 +424,8 @@ export function gameFactory() {
   function initializeWithInputs(eventName, shipValues) {
     initializePlayer(shipValues);
     initializeComputer();
-    const renderShipsEvents = "renderShipsEvents";
-    PubSub.publish(renderShipsEvents, { player, computer });
+    const renderPlayerShips = "renderPlayerShips";
+    PubSub.publish(renderPlayerShips, player);
   }
 
   function switchComputerTurns() {
