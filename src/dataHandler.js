@@ -486,6 +486,10 @@ export function gameFactory() {
     const [x, y] = convertIndexToCoordinates($hitCell.id);
     const newGameboard = computer.getGameboard();
 
+    if (computer.getGameboard().getHitboard()[y][x] !== null) {
+      return;
+    }
+
     // Checks if the game is already won
     if (
       computer.getGameboard().isAllSunk() ||
