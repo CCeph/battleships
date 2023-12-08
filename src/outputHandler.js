@@ -70,6 +70,7 @@ function renderHitboards(eventName, players) {
 
   const playerHitboard = player.getGameboard().getHitboard();
   const computerHitboard = computer.getGameboard().getHitboard();
+  const computerShipboard = computer.getGameboard().getShipboard();
 
   playerHitboard.forEach((row, rowNumber) => {
     row.forEach((val, valNumber) => {
@@ -89,6 +90,9 @@ function renderHitboards(eventName, players) {
       targetDiv.textContent = "";
       if (val !== null) {
         targetDiv.textContent = "X";
+        if (computerShipboard[rowNumber][valNumber] !== null) {
+          targetDiv.classList.add("occupied");
+        }
       }
     });
   });
