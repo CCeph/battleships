@@ -118,7 +118,8 @@ function renderBadShipPlacement() {
 
 function renderDefaultStatus() {
   const gameStatusTitle = cachedDOM.$gameStatus;
-  gameStatusTitle.textContent = "Place your ships";
+  gameStatusTitle.textContent =
+    "Place your ships by filling out the form below";
 
   const shipsInputForm = cachedDOM.$shipsInputForm;
   shipsInputForm.classList.remove("hide");
