@@ -139,3 +139,25 @@ body {
   width: 1.5rem;
   text-align: center;
 }
+
+.game {
+  position: relative;
+}
+
+.formDisabledPopup {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: -1;
+
+  border: 1px solid black;
+  padding: 1rem;
+  border-radius: 5px;
+  font-family: "Black Ops One", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.2rem;
+  color: white;
+  -webkit-text-stroke: 1px black;
+  background-color: silver;
+}
