@@ -2,14 +2,10 @@ import PubSub from "pubsub-js";
 import { checkValidBounds } from "./commonUtils";
 
 function createDOMCache() {
-  const $placeShipsForm = document.querySelector(
-    "[data-form-name='placeShips']"
-  );
   const $playerCellsList = document.querySelectorAll(".player .boardCell");
   const $computerCellsList = document.querySelectorAll(".computer .boardCell");
   const $resetButton = document.querySelector("[data-resetGame]");
   return {
-    $placeShipsForm,
     $playerCellsList,
     $computerCellsList,
     $resetButton,
@@ -156,20 +152,6 @@ function checkValidShipPlacement(shipInput) {
 }
 
 function listenToInputs() {
-  cachedDOM.$placeShipsForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const inputElements = getShipInputElements();
-    const shipValues = getShipValues(inputElements);
-    if (checkValidShipPlacement(shipValues) === false) {
-      const badShipPlacementEvent = "badShipPlacementEvent";
-      PubSub.publish(badShipPlacementEvent);
-      return;
-    }
-
-    const shipsInputEvent = "shipsInputEvent";
-    PubSub.publish(shipsInputEvent, shipValues);
-  });
-
   Array.from(cachedDOM.$computerCellsList).forEach((cell) => {
     cell.addEventListener("click", () => {
       const computerHitEvent = "computerHitEvent";

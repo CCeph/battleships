@@ -186,6 +186,10 @@ body {
   background-color: grey;
 }
 
+.draggable.dragging {
+  opacity: 0.5;
+}
+
 .formDisabledPopup {
   position: absolute;
   bottom: 20%;
