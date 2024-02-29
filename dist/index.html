@@ -281,250 +281,54 @@
         </div>
       </div>
 
-      <div class="placeShipsForm" data-ships-input-form>
-        <p class="placeShipsDescription">
-          For the starting coordinates, select a number from 0 to 9. <br />
-          For the alignment, select either horizontal or vertical. <br />
-          Ships can not overlap. <br />
-          No part of the ship can be off the grid.
-        </p>
-        <form action="" data-form-name="placeShips">
-          <div class="placementGrid">
-            <h4>Ship Name</h4>
-            <h4>Length</h4>
-            <h4>Starting Coordinate</h4>
-            <h4>Alignment</h4>
-
-            <p>Carrier</p>
-            <p>5 spaces</p>
-            <div class="position">
-              <label for="carrierX">X:</label>
-              <input
-                autocomplete="off"
-                type="text"
-                name="carrierX"
-                id="carrierX"
-                maxlength="1"
-                pattern="[0-9]"
-                required
-              />
-              <label for="carrierY">Y:</label>
-              <input
-                autocomplete="off"
-                type="text"
-                name="carrierY"
-                id="carrierY"
-                maxlength="1"
-                pattern="[0-9]"
-                required
-              />
-            </div>
-            <div class="alignment">
-              <label for="carrierH">Horizontal</label>
-              <input
-                autocomplete="off"
-                type="radio"
-                name="carrierAlignment"
-                id="carrierH"
-                value="H"
-                required
-              />
-              <label for="carrierV">Vertical</label>
-              <input
-                autocomplete="off"
-                type="radio"
-                name="carrierAlignment"
-                id="carrierV"
-                value="V"
-                required
-              />
-            </div>
-
-            <p>Battleship</p>
-            <p>4 spaces</p>
-            <div class="position">
-              <label for="battleshipX">X:</label>
-              <input
-                autocomplete="off"
-                type="text"
-                name="battleshipX"
-                id="battleshipX"
-                maxlength="1"
-                pattern="[0-9]"
-                required
-              />
-              <label for="battleshipY">Y:</label>
-              <input
-                autocomplete="off"
-                type="text"
-                name="battleshipY"
-                id="battleshipY"
-                maxlength="1"
-                pattern="[0-9]"
-                required
-              />
-            </div>
-            <div class="alignment">
-              <label for="battleshipH">Horizontal</label>
-              <input
-                autocomplete="off"
-                type="radio"
-                name="battleshipAlignment"
-                id="battleshipH"
-                value="H"
-                required
-              />
-              <label for="battleshipV">Vertical</label>
-              <input
-                autocomplete="off"
-                type="radio"
-                name="battleshipAlignment"
-                id="battleshipV"
-                value="V"
-                required
-              />
-            </div>
-
-            <p>Cruiser</p>
-            <p>3 spaces</p>
-            <div class="position">
-              <label for="cruiserX">X:</label>
-              <input
-                autocomplete="off"
-                type="text"
-                name="cruiserX"
-                id="cruiserX"
-                maxlength="1"
-                pattern="[0-9]"
-                required
-              />
-              <label for="cruiserY">Y:</label>
-              <input
-                autocomplete="off"
-                type="text"
-                name="cruiserY"
-                id="cruiserY"
-                maxlength="1"
-                pattern="[0-9]"
-                required
-              />
-            </div>
-            <div class="alignment">
-              <label for="cruiserH">Horizontal</label>
-              <input
-                autocomplete="off"
-                type="radio"
-                name="cruiserAlignment"
-                id="cruiserH"
-                value="H"
-                required
-              />
-              <label for="cruiserV">Vertical</label>
-              <input
-                autocomplete="off"
-                type="radio"
-                name="cruiserAlignment"
-                id="cruiserV"
-                value="V"
-                required
-              />
-            </div>
-
-            <p>Submarine</p>
-            <p>3 spaces</p>
-            <div class="position">
-              <label for="submarineX">X:</label>
-              <input
-                autocomplete="off"
-                type="text"
-                name="submarineX"
-                id="submarineX"
-                maxlength="1"
-                pattern="[0-9]"
-                required
-              />
-              <label for="submarineY">Y:</label>
-              <input
-                autocomplete="off"
-                type="text"
-                name="submarineY"
-                id="submarineY"
-                maxlength="1"
-                pattern="[0-9]"
-                required
-              />
-            </div>
-            <div class="alignment">
-              <label for="submarineH">Horizontal</label>
-              <input
-                autocomplete="off"
-                type="radio"
-                name="submarineAlignment"
-                id="submarineH"
-                value="H"
-                required
-              />
-              <label for="submarineV">Vertical</label>
-              <input
-                autocomplete="off"
-                type="radio"
-                name="submarineAlignment"
-                id="submarineV"
-                value="V"
-                required
-              />
-            </div>
-
-            <p>Destroyer</p>
-            <p>2 spaces</p>
-            <div class="position">
-              <label for="destroyerX">X:</label>
-              <input
-                autocomplete="off"
-                type="text"
-                name="destroyerX"
-                id="destroyerX"
-                maxlength="1"
-                pattern="[0-9]"
-                required
-              />
-              <label for="destroyerY">Y:</label>
-              <input
-                autocomplete="off"
-                type="text"
-                name="destroyerY"
-                id="destroyerY"
-                maxlength="1"
-                pattern="[0-9]"
-                required
-              />
-            </div>
-            <div class="alignment">
-              <label for="destroyerH">Horizontal</label>
-              <input
-                autocomplete="off"
-                type="radio"
-                name="destroyerAlignment"
-                id="destroyerH"
-                value="H"
-                required
-              />
-              <label for="destroyerV">Vertical</label>
-              <input
-                autocomplete="off"
-                type="radio"
-                name="destroyerAlignment"
-                id="destroyerV"
-                value="V"
-                required
-              />
-            </div>
-            <div class="submitRow"><button type="submit">Submit</button></div>
-          </div>
-        </form>
-      </div>
-      <div class="formDisabledPopup">
-        <h3>Reset the game to change ship placement</h3>
+      <div class="ships">
+        <div
+          class="draggable ship horizontal"
+          draggable="true"
+          data-ship="carrier"
+        >
+          <div class="ship-cell" data-carrier-cell="0"></div>
+          <div class="ship-cell" data-carrier-cell="1"></div>
+          <div class="ship-cell" data-carrier-cell="2"></div>
+          <div class="ship-cell" data-carrier-cell="3"></div>
+          <div class="ship-cell" data-carrier-cell="4"></div>
+        </div>
+        <div
+          class="draggable ship vertical"
+          draggable="true"
+          data-ship="battleship"
+        >
+          <div class="ship-cell" data-battleship-cell="0"></div>
+          <div class="ship-cell" data-battleship-cell="1"></div>
+          <div class="ship-cell" data-battleship-cell="2"></div>
+          <div class="ship-cell" data-battleship-cell="3"></div>
+        </div>
+        <div
+          class="draggable ship horizontal"
+          draggable="true"
+          data-ship="cruiser"
+        >
+          <div class="ship-cell" data-cruiser-cell="0"></div>
+          <div class="ship-cell" data-cruiser-cell="1"></div>
+          <div class="ship-cell" data-cruiser-cell="2"></div>
+        </div>
+        <div
+          class="draggable ship horizontal"
+          draggable="true"
+          data-ship="submarine"
+        >
+          <div class="ship-cell" data-submarine-cell="0"></div>
+          <div class="ship-cell" data-submarine-cell="1"></div>
+          <div class="ship-cell" data-submarine-cell="2"></div>
+        </div>
+        <div
+          class="draggable ship horizontal"
+          draggable="true"
+          data-ship="destroyer"
+        >
+          <div class="ship-cell" data-destroyer-cell="0"></div>
+          <div class="ship-cell" data-destroyer-cell="1"></div>
+        </div>
       </div>
     </div>
   </body>

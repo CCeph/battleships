@@ -1,15 +1,11 @@
 import PubSub from "pubsub-js";
-import { checkValidBounds } from "./commonUtils";
+/* import { checkValidBounds } from "./commonUtils"; */
 
 function createDOMCache() {
-  const $placeShipsForm = document.querySelector(
-    "[data-form-name='placeShips']"
-  );
   const $playerCellsList = document.querySelectorAll(".player .boardCell");
   const $computerCellsList = document.querySelectorAll(".computer .boardCell");
   const $resetButton = document.querySelector("[data-resetGame]");
   return {
-    $placeShipsForm,
     $playerCellsList,
     $computerCellsList,
     $resetButton,
@@ -18,7 +14,7 @@ function createDOMCache() {
 
 const cachedDOM = createDOMCache();
 
-function getShipInputElements() {
+/* function getShipInputElements() {
   const carrier = {
     $X: document.querySelector("#carrierX"),
     $Y: document.querySelector("#carrierY"),
@@ -56,9 +52,9 @@ function getShipInputElements() {
     submarine,
     destroyer,
   };
-}
+} */
 
-function getShipValues(shipElements) {
+/* function getShipValues(shipElements) {
   const shipValues = {};
   const shipEntries = Object.entries(shipElements);
   shipEntries.forEach((ship) => {
@@ -78,9 +74,9 @@ function getShipValues(shipElements) {
     };
   });
   return shipValues;
-}
+} */
 
-function getShipLengthByName(shipName) {
+/* function getShipLengthByName(shipName) {
   let length = null;
   switch (shipName) {
     case "carrier":
@@ -102,9 +98,9 @@ function getShipLengthByName(shipName) {
       console.error("Error in ship name");
   }
   return length;
-}
+} */
 
-function checkNoOverlap(shipPlacement, shipLength, mockShipboard) {
+/* function checkNoOverlap(shipPlacement, shipLength, mockShipboard) {
   const mockShipboardCopy = [...mockShipboard];
   const currentPosition = [Number(shipPlacement.X), Number(shipPlacement.Y)];
   for (let i = 0; i < shipLength; i += 1) {
@@ -119,9 +115,9 @@ function checkNoOverlap(shipPlacement, shipLength, mockShipboard) {
     }
   }
   return { valid: true, mockShipboardCopy };
-}
+} */
 
-function checkValidShipPlacement(shipInput) {
+/* function checkValidShipPlacement(shipInput) {
   const shipArray = Object.entries(shipInput);
   let mockShipboard = [
     [null, null, null, null, null, null, null, null, null, null],
@@ -153,23 +149,9 @@ function checkValidShipPlacement(shipInput) {
     return false;
   });
   return valid;
-}
+} */
 
 function listenToInputs() {
-  cachedDOM.$placeShipsForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const inputElements = getShipInputElements();
-    const shipValues = getShipValues(inputElements);
-    if (checkValidShipPlacement(shipValues) === false) {
-      const badShipPlacementEvent = "badShipPlacementEvent";
-      PubSub.publish(badShipPlacementEvent);
-      return;
-    }
-
-    const shipsInputEvent = "shipsInputEvent";
-    PubSub.publish(shipsInputEvent, shipValues);
-  });
-
   Array.from(cachedDOM.$computerCellsList).forEach((cell) => {
     cell.addEventListener("click", () => {
       const computerHitEvent = "computerHitEvent";
