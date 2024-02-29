@@ -171,6 +171,7 @@ body {
   display: flex;
   gap: 50px;
   justify-content: center;
+  align-items: center;
 }
 
 .ship {
@@ -178,6 +179,10 @@ body {
   gap: 1px;
   padding: 1px;
   background-color: black;
+}
+
+.ship.vertical {
+  flex-direction: column;
 }
 
 .ship .ship-cell {
