@@ -2,9 +2,11 @@ import PubSub from "pubsub-js";
 
 function createDOMCache() {
   const $draggables = document.querySelectorAll(".draggable");
+  const $playerCellsList = document.querySelectorAll(".player .boardCell");
 
   return {
     $draggables,
+    $playerCellsList,
   };
 }
 
