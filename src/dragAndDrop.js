@@ -3,14 +3,29 @@ import PubSub from "pubsub-js";
 function createDOMCache() {
   const $draggables = document.querySelectorAll(".draggable");
   const $playerCellsList = document.querySelectorAll(".player .boardCell");
+  const $shipCells = document.querySelectorAll(".ship-cell");
 
   return {
     $draggables,
     $playerCellsList,
+    $shipCells,
   };
 }
 
 const cachedDOM = createDOMCache();
+
+const activeShipCell = {
+  cellNumber: null,
+  setCellNumber(newNumber) {
+    this.cellNumber = newNumber;
+  },
+};
+
+cachedDOM.$shipCells.forEach((cell) => {
+  cell.addEventListener("mousedown", () => {
+    activeShipCell.setCellNumber(cell.dataset.cell);
+  });
+});
 
 cachedDOM.$draggables.forEach((draggable) => {
   draggable.addEventListener("dragstart", () => {
@@ -95,13 +110,13 @@ function pureGetDraggingShip(draggingElement) {
 }
 
 function checkValidShipPlacement(ship, cell) {
-  console.log(ship, cell);
+  console.log(ship, cell.id);
 }
 
 cachedDOM.$playerCellsList.forEach((cell) => {
   cell.addEventListener("dragover", () => {
     const draggingElement = document.querySelector(".dragging");
     const ship = pureGetDraggingShip(draggingElement);
-    // checkValidShipPlacement(ship, cell);
+    checkValidShipPlacement(ship, cell);
   });
 });
