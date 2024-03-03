@@ -12,6 +12,7 @@ export function checkValidBounds(shipPlacement, shipLength) {
   let valid = true;
 
   if (shipPlacement.alignment === "V") {
+    console.log("executes");
     if (shipPlacement.Y > 10 - shipLength) {
       valid = false;
       return valid;

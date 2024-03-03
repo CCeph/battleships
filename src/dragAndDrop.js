@@ -1,4 +1,5 @@
 import PubSub from "pubsub-js";
+import { convertIndexToCoordinates } from "./commonUtils";
 
 function createDOMCache() {
   const $draggables = document.querySelectorAll(".draggable");
@@ -23,7 +24,7 @@ const activeShipCell = {
 
 cachedDOM.$shipCells.forEach((cell) => {
   cell.addEventListener("mousedown", () => {
-    activeShipCell.setCellNumber(cell.dataset.cell);
+    activeShipCell.setCellNumber(Number(cell.dataset.cell));
   });
 });
 
@@ -76,9 +77,9 @@ function pureGetDraggingShip(draggingElement) {
     name: draggingElement.dataset.ship,
   };
   if ([...draggingElement.classList].includes("vertical")) {
-    ship.orientation = "vertical";
+    ship.orientation = "V";
   } else {
-    ship.orientation = "horizontal";
+    ship.orientation = "H";
   }
 
   switch (ship.name) {
@@ -109,14 +110,51 @@ function pureGetDraggingShip(draggingElement) {
   return ship;
 }
 
-function checkValidShipPlacement(ship, cell) {
-  console.log(ship, cell.id);
+function checkValidBounds(shipPlacement, selectedShipCell, shipLength) {
+  let valid = true;
+
+  if (shipPlacement.alignment === "V") {
+    const topOverHang = selectedShipCell;
+    const bottomOverHang = shipLength - (selectedShipCell + 1);
+    if (
+      shipPlacement.Y + bottomOverHang > 9 ||
+      shipPlacement.Y - topOverHang < 0
+    ) {
+      valid = false;
+      return valid;
+    }
+  }
+
+  if (shipPlacement.alignment === "H") {
+    const rightOverHang = shipLength - (selectedShipCell + 1);
+    const leftOverHang = selectedShipCell;
+    if (
+      shipPlacement.X + rightOverHang > 9 ||
+      shipPlacement.X - leftOverHang < 0
+    ) {
+      valid = false;
+      return valid;
+    }
+  }
+
+  return valid;
+}
+
+function checkValidShipPlacement(ship, selectedShipCell, boardCell) {
+  const coordinatesArray = convertIndexToCoordinates(boardCell.id);
+  const shipPlacement = {
+    X: coordinatesArray[0],
+    Y: coordinatesArray[1],
+    alignment: ship.orientation,
+  };
+  checkValidBounds(shipPlacement, selectedShipCell, ship.length);
 }
 
 cachedDOM.$playerCellsList.forEach((cell) => {
   cell.addEventListener("dragover", () => {
     const draggingElement = document.querySelector(".dragging");
+    const selectedShipCell = activeShipCell.cellNumber;
     const ship = pureGetDraggingShip(draggingElement);
-    checkValidShipPlacement(ship, cell);
+    checkValidShipPlacement(ship, selectedShipCell, cell);
   });
 });
