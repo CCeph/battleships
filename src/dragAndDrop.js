@@ -56,8 +56,7 @@ cachedDOM.$draggables.forEach((draggable) => {
   return valid;
 } */
 
-function getDraggingShip() {
-  const draggingElement = document.querySelector(".dragging");
+function pureGetDraggingShip(draggingElement) {
   const ship = {
     name: draggingElement.dataset.ship,
   };
@@ -101,7 +100,8 @@ function checkValidShipPlacement(ship, cell) {
 
 cachedDOM.$playerCellsList.forEach((cell) => {
   cell.addEventListener("dragover", () => {
-    const ship = getDraggingShip();
+    const draggingElement = document.querySelector(".dragging");
+    const ship = pureGetDraggingShip(draggingElement);
     // checkValidShipPlacement(ship, cell);
   });
 });
