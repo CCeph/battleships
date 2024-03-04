@@ -280,8 +280,20 @@ cachedDOM.$draggables.forEach((draggable) => {
 });
 
 cachedDOM.$startGameButton.addEventListener("click", () => {
-  const shipsInputEvent = "shipsInputEvent";
-  PubSub.publish(shipsInputEvent, shipValues.values);
+  const inputValues = shipValues.values;
+  if (
+    "carrier" in inputValues &&
+    "battleship" in inputValues &&
+    "cruiser" in inputValues &&
+    "submarine" in inputValues &&
+    "destroyer" in inputValues
+  ) {
+    const shipsInputEvent = "shipsInputEvent";
+    PubSub.publish(shipsInputEvent, shipValues.values);
+  } else {
+    const badShipPlacementEvent = "badShipPlacementEvent";
+    PubSub.publish(badShipPlacementEvent);
+  }
 });
 
 const resetGameEvent = "resetGameEvent";
