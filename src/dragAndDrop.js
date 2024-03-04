@@ -240,7 +240,6 @@ function displayTempShip(ship, selectedShipCell, boardCell) {
       cellElement.classList.add("occupied");
     });
   }
-  console.log(shipValues);
 }
 
 cachedDOM.$playerCellsList.forEach((cell) => {
