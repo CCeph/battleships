@@ -5,7 +5,8 @@ function createDOMCache() {
   const $playerCellsList = document.querySelectorAll(".player .boardCell");
   const $computerCellsList = document.querySelectorAll(".computer .boardCell");
   const $gameStatus = document.querySelector("[data-gameStatus]");
-  return { $playerCellsList, $computerCellsList, $gameStatus };
+  const $ships = document.querySelectorAll("[data-ship]");
+  return { $playerCellsList, $computerCellsList, $gameStatus, $ships };
 }
 
 const cachedDOM = createDOMCache();
@@ -110,10 +111,20 @@ function renderBadShipPlacement() {
     "Ships were placed incorrectly. Please try again.";
 }
 
+function showPortShips() {
+  const { $ships } = cachedDOM;
+  const ships = [...$ships];
+  ships.forEach((ship) => {
+    ship.classList.remove("hide");
+  });
+}
+
 function renderDefaultStatus() {
   const gameStatusTitle = cachedDOM.$gameStatus;
   gameStatusTitle.textContent =
     "Place your ships by filling out the form below";
+
+  showPortShips();
 }
 
 const renderShipsEvents = "renderShipsEvents";
