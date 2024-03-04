@@ -44,6 +44,9 @@ const shipValues = {
     const shipName = newShip.name;
     this.values[shipName] = newShip;
   },
+  resetValues() {
+    this.values = {};
+  },
 };
 
 cachedDOM.$shipCells.forEach((cell) => {
@@ -279,4 +282,9 @@ cachedDOM.$draggables.forEach((draggable) => {
 cachedDOM.$startGameButton.addEventListener("click", () => {
   const shipsInputEvent = "shipsInputEvent";
   PubSub.publish(shipsInputEvent, shipValues.values);
+});
+
+const resetGameEvent = "resetGameEvent";
+PubSub.subscribe(resetGameEvent, () => {
+  shipValues.resetValues();
 });
