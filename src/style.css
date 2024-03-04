@@ -195,7 +195,7 @@ body {
   opacity: 0.5;
 }
 
-.draggable.hide {
+.hide {
   visibility: hidden;
 }
 

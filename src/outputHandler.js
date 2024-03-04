@@ -6,7 +6,14 @@ function createDOMCache() {
   const $computerCellsList = document.querySelectorAll(".computer .boardCell");
   const $gameStatus = document.querySelector("[data-gameStatus]");
   const $ships = document.querySelectorAll("[data-ship]");
-  return { $playerCellsList, $computerCellsList, $gameStatus, $ships };
+  const $startGameButton = document.querySelector("[data-start-game]");
+  return {
+    $playerCellsList,
+    $computerCellsList,
+    $gameStatus,
+    $ships,
+    $startGameButton,
+  };
 }
 
 const cachedDOM = createDOMCache();
@@ -18,6 +25,9 @@ function renderShipboards(eventName, players) {
   const computerShipboard = computer.getGameboard().getShipboard();
   const gameStatus = cachedDOM.$gameStatus;
   gameStatus.textContent = "The game has started!";
+
+  const { $startGameButton } = cachedDOM;
+  $startGameButton.classList.add("hide");
 
   playerShipboard.forEach((row, rowNumber) => {
     row.forEach((val, valNumber) => {
@@ -47,6 +57,9 @@ function renderPlayerShipboard(eventName, player) {
   const gameStatus = cachedDOM.$gameStatus;
 
   gameStatus.textContent = "The game has started!";
+
+  const { $startGameButton } = cachedDOM;
+  $startGameButton.classList.add("hide");
 
   playerShipboard.forEach((row, rowNumber) => {
     row.forEach((val, valNumber) => {
@@ -117,6 +130,9 @@ function showPortShips() {
   ships.forEach((ship) => {
     ship.classList.remove("hide");
   });
+
+  const { $startGameButton } = cachedDOM;
+  $startGameButton.classList.remove("hide");
 }
 
 function renderDefaultStatus() {
