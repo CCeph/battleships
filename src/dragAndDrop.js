@@ -224,7 +224,6 @@ function displayTempShip(ship, selectedShipCell, boardCell) {
     });
   }
   shipValues.addShip(shipPlacement);
-  console.log(shipValues);
 }
 
 cachedDOM.$playerCellsList.forEach((cell) => {
