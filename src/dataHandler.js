@@ -418,7 +418,7 @@ export function gameFactory() {
     randomlyPlaceShipOnComputer(computerCruiser);
     randomlyPlaceShipOnComputer(computerSubmarine);
     randomlyPlaceShipOnComputer(computerDestroyer);
-    console.log(computer.getGameboard().getShipboard());
+    // console.log(computer.getGameboard().getShipboard());
   }
 
   function initializeWithInputs(eventName, shipValues) {
