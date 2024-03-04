@@ -36,6 +36,14 @@ const lastHoveredBoardCell = {
   },
 };
 
+const shipValues = {
+  values: {},
+  addShip(newShip) {
+    const shipName = newShip.name;
+    this.values[shipName] = newShip;
+  },
+};
+
 cachedDOM.$shipCells.forEach((cell) => {
   cell.addEventListener("mousedown", () => {
     activeShipCell.setCellNumber(Number(cell.dataset.cell));
@@ -175,8 +183,10 @@ function checkValidShipPlacement(ship, selectedShipCell, boardCell) {
 }
 
 function displayTempShip(ship, selectedShipCell, boardCell) {
+  console.log(ship);
   const coordinatesArray = convertIndexToCoordinates(boardCell.id);
   const shipPlacement = {
+    name: ship.name,
     X: coordinatesArray[0],
     Y: coordinatesArray[1],
     alignment: ship.orientation,
@@ -213,6 +223,8 @@ function displayTempShip(ship, selectedShipCell, boardCell) {
       cellElement.classList.add("occupied");
     });
   }
+  shipValues.addShip(shipPlacement);
+  console.log(shipValues);
 }
 
 cachedDOM.$playerCellsList.forEach((cell) => {
