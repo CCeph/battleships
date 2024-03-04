@@ -10,6 +10,7 @@ function createDOMCache() {
   const $shipCells = document.querySelectorAll(".ship-cell");
   const $port = document.querySelector("[data-port]");
   const $playerBoard = document.querySelector(".player .board");
+  const $startGameButton = document.querySelector("[data-start-game]");
 
   return {
     $draggables,
@@ -17,6 +18,7 @@ function createDOMCache() {
     $shipCells,
     $port,
     $playerBoard,
+    $startGameButton,
   };
 }
 
@@ -260,4 +262,9 @@ cachedDOM.$draggables.forEach((draggable) => {
       }
     }
   });
+});
+
+cachedDOM.$startGameButton.addEventListener("click", () => {
+  const shipsInputEvent = "shipsInputEvent";
+  PubSub.publish(shipsInputEvent, shipValues.values);
 });
