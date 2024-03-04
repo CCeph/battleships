@@ -184,8 +184,18 @@ function checkValidShipPlacement(ship, selectedShipCell, boardCell) {
   return false;
 }
 
+function addToShipValues(shipPlacement, startCell) {
+  const coordinatesArray = convertIndexToCoordinates(startCell);
+  const ship = {
+    name: shipPlacement.name,
+    X: coordinatesArray[0],
+    Y: coordinatesArray[1],
+    alignment: shipPlacement.alignment,
+  };
+  shipValues.addShip(ship);
+}
+
 function displayTempShip(ship, selectedShipCell, boardCell) {
-  console.log(ship);
   const coordinatesArray = convertIndexToCoordinates(boardCell.id);
   const shipPlacement = {
     name: ship.name,
@@ -202,6 +212,7 @@ function displayTempShip(ship, selectedShipCell, boardCell) {
       rightEndCell,
       1
     );
+    addToShipValues(shipPlacement, leftEndCell);
     cellsToCheck.forEach((cell) => {
       const cellElement = document.querySelector(
         `[data-player-cell='${cell}']`
@@ -218,6 +229,7 @@ function displayTempShip(ship, selectedShipCell, boardCell) {
       bottomEndCell,
       10
     );
+    addToShipValues(shipPlacement, topEndCell);
     cellsToCheck.forEach((cell) => {
       const cellElement = document.querySelector(
         `[data-player-cell='${cell}']`
@@ -225,7 +237,7 @@ function displayTempShip(ship, selectedShipCell, boardCell) {
       cellElement.classList.add("occupied");
     });
   }
-  shipValues.addShip(shipPlacement);
+  console.log(shipValues);
 }
 
 cachedDOM.$playerCellsList.forEach((cell) => {

@@ -5,8 +5,7 @@ function createDOMCache() {
   const $playerCellsList = document.querySelectorAll(".player .boardCell");
   const $computerCellsList = document.querySelectorAll(".computer .boardCell");
   const $gameStatus = document.querySelector("[data-gameStatus]");
-  const $shipsInputForm = document.querySelector("[data-ships-input-form]");
-  return { $playerCellsList, $computerCellsList, $gameStatus, $shipsInputForm };
+  return { $playerCellsList, $computerCellsList, $gameStatus };
 }
 
 const cachedDOM = createDOMCache();
@@ -16,10 +15,7 @@ function renderShipboards(eventName, players) {
 
   const playerShipboard = player.getGameboard().getShipboard();
   const computerShipboard = computer.getGameboard().getShipboard();
-  const shipsInputForm = cachedDOM.$shipsInputForm;
   const gameStatus = cachedDOM.$gameStatus;
-
-  shipsInputForm.classList.add("hide");
   gameStatus.textContent = "The game has started!";
 
   playerShipboard.forEach((row, rowNumber) => {
@@ -47,10 +43,8 @@ function renderShipboards(eventName, players) {
 
 function renderPlayerShipboard(eventName, player) {
   const playerShipboard = player.getGameboard().getShipboard();
-  const shipsInputForm = cachedDOM.$shipsInputForm;
   const gameStatus = cachedDOM.$gameStatus;
 
-  shipsInputForm.classList.add("hide");
   gameStatus.textContent = "The game has started!";
 
   playerShipboard.forEach((row, rowNumber) => {
@@ -120,9 +114,6 @@ function renderDefaultStatus() {
   const gameStatusTitle = cachedDOM.$gameStatus;
   gameStatusTitle.textContent =
     "Place your ships by filling out the form below";
-
-  const shipsInputForm = cachedDOM.$shipsInputForm;
-  shipsInputForm.classList.remove("hide");
 }
 
 const renderShipsEvents = "renderShipsEvents";
