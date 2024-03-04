@@ -270,7 +270,7 @@ cachedDOM.$draggables.forEach((draggable) => {
     ) {
       if (checkValidShipPlacement(ship, selectedShipCell, cell)) {
         displayTempShip(ship, selectedShipCell, cell);
-        cachedDOM.$port.removeChild(draggingElement);
+        draggingElement.classList.add("hide");
       }
     }
   });

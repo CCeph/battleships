@@ -195,6 +195,10 @@ body {
   opacity: 0.5;
 }
 
+.draggable.hide {
+  visibility: hidden;
+}
+
 .formDisabledPopup {
   position: absolute;
   bottom: 20%;
