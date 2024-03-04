@@ -138,7 +138,7 @@ function showPortShips() {
 function renderDefaultStatus() {
   const gameStatusTitle = cachedDOM.$gameStatus;
   gameStatusTitle.textContent =
-    "Place your ships by filling out the form below";
+    "Place all your ships by dragging and dropping onto the board then start the game";
 
   showPortShips();
 }
