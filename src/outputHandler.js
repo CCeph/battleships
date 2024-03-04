@@ -121,7 +121,7 @@ function renderComputerWin() {
 function renderBadShipPlacement() {
   const gameStatusTitle = cachedDOM.$gameStatus;
   gameStatusTitle.textContent =
-    "Ships were placed incorrectly. Please try again.";
+    "Not all ships are placed, or they are placed incorrectly. Please try again.";
 }
 
 function showPortShips() {
