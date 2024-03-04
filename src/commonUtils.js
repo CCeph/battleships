@@ -12,7 +12,6 @@ export function checkValidBounds(shipPlacement, shipLength) {
   let valid = true;
 
   if (shipPlacement.alignment === "V") {
-    console.log("executes");
     if (shipPlacement.Y > 10 - shipLength) {
       valid = false;
       return valid;
@@ -27,4 +26,12 @@ export function checkValidBounds(shipPlacement, shipLength) {
   }
 
   return valid;
+}
+
+export function createSequentialArrayFromTo(initial, end, interval) {
+  const array = [];
+  for (let i = initial; i <= end; i += interval) {
+    array.push(i);
+  }
+  return array;
 }

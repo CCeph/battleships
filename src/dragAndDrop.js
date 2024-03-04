@@ -1,5 +1,8 @@
 import PubSub from "pubsub-js";
-import { convertIndexToCoordinates } from "./commonUtils";
+import {
+  convertIndexToCoordinates,
+  createSequentialArrayFromTo,
+} from "./commonUtils";
 
 function createDOMCache() {
   const $draggables = document.querySelectorAll(".draggable");
@@ -140,6 +143,53 @@ function checkValidBounds(shipPlacement, selectedShipCell, shipLength) {
   return valid;
 }
 
+function checkNoOverlap(
+  shipPlacement,
+  selectedShipCell,
+  shipLength,
+  boardCell
+) {
+  let valid = true;
+
+  if (shipPlacement.alignment === "H") {
+    const leftEndCell = boardCell - selectedShipCell;
+    const rightEndCell = leftEndCell + (shipLength - 1);
+    const cellsToCheck = createSequentialArrayFromTo(
+      leftEndCell,
+      rightEndCell,
+      1
+    );
+    cellsToCheck.forEach((cell) => {
+      const cellElement = document.querySelector(
+        `[data-player-cell='${cell}']`
+      );
+      if ([...cellElement.classList].includes("occupied")) {
+        valid = false;
+      }
+    });
+    return valid;
+  }
+
+  if (shipPlacement.alignment === "V") {
+    const topEndCell = boardCell - 10 * selectedShipCell;
+    const bottomEndCell = topEndCell + (shipLength - 1) * 10;
+    const cellsToCheck = createSequentialArrayFromTo(
+      topEndCell,
+      bottomEndCell,
+      10
+    );
+    cellsToCheck.forEach((cell) => {
+      const cellElement = document.querySelector(
+        `[data-player-cell='${cell}']`
+      );
+      if ([...cellElement.classList].includes("occupied")) {
+        valid = false;
+      }
+    });
+    return valid;
+  }
+}
+
 function checkValidShipPlacement(ship, selectedShipCell, boardCell) {
   const coordinatesArray = convertIndexToCoordinates(boardCell.id);
   const shipPlacement = {
@@ -147,7 +197,9 @@ function checkValidShipPlacement(ship, selectedShipCell, boardCell) {
     Y: coordinatesArray[1],
     alignment: ship.orientation,
   };
-  checkValidBounds(shipPlacement, selectedShipCell, ship.length);
+  if (checkValidBounds(shipPlacement, selectedShipCell, ship.length)) {
+    checkNoOverlap(shipPlacement, selectedShipCell, ship.length, boardCell.id);
+  }
 }
 
 cachedDOM.$playerCellsList.forEach((cell) => {
