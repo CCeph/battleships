@@ -42,40 +42,6 @@ cachedDOM.$shipCells.forEach((cell) => {
   });
 });
 
-/* function checkValidShipPlacement(shipInput) {
-  const shipArray = Object.entries(shipInput);
-  let mockShipboard = [
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-  ];
-  const valid = shipArray.every((ship) => {
-    const shipName = ship[0];
-    const shipPlacement = ship[1];
-    const shipLength = getShipLengthByName(shipName);
-
-    const validBounds = checkValidBounds(shipPlacement, shipLength);
-    const validNoOverlap = checkNoOverlap(
-      shipPlacement,
-      shipLength,
-      mockShipboard
-    );
-    mockShipboard = validNoOverlap.mockShipboardCopy;
-    if (validBounds === true && validNoOverlap.valid === true) {
-      return true;
-    }
-    return false;
-  });
-  return valid;
-} */
-
 function pureGetDraggingShip(draggingElement) {
   const ship = {
     name: draggingElement.dataset.ship,
