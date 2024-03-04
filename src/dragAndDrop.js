@@ -8,11 +8,15 @@ function createDOMCache() {
   const $draggables = document.querySelectorAll(".draggable");
   const $playerCellsList = document.querySelectorAll(".player .boardCell");
   const $shipCells = document.querySelectorAll(".ship-cell");
+  const $port = document.querySelector("[data-port]");
+  const $playerBoard = document.querySelector(".player .board");
 
   return {
     $draggables,
     $playerCellsList,
     $shipCells,
+    $port,
+    $playerBoard,
   };
 }
 
@@ -25,19 +29,16 @@ const activeShipCell = {
   },
 };
 
+const lastHoveredBoardCell = {
+  cell: null,
+  setCell(newCell) {
+    this.cell = newCell;
+  },
+};
+
 cachedDOM.$shipCells.forEach((cell) => {
   cell.addEventListener("mousedown", () => {
     activeShipCell.setCellNumber(Number(cell.dataset.cell));
-  });
-});
-
-cachedDOM.$draggables.forEach((draggable) => {
-  draggable.addEventListener("dragstart", () => {
-    draggable.classList.add("dragging");
-  });
-
-  draggable.addEventListener("dragend", () => {
-    draggable.classList.remove("dragging");
   });
 });
 
@@ -98,11 +99,11 @@ function pureGetDraggingShip(draggingElement) {
       ship.length = 3;
       break;
 
-    case "destroyer":
-      ship.length = 2;
+    case "submarine":
+      ship.length = 3;
       break;
 
-    case "submarine":
+    case "destroyer":
       ship.length = 2;
       break;
 
@@ -151,13 +152,13 @@ function checkNoOverlap(
 ) {
   let valid = true;
 
-  if (shipPlacement.alignment === "H") {
-    const leftEndCell = boardCell - selectedShipCell;
-    const rightEndCell = leftEndCell + (shipLength - 1);
+  if (shipPlacement.alignment === "V") {
+    const topEndCell = boardCell - 10 * selectedShipCell;
+    const bottomEndCell = topEndCell + (shipLength - 1) * 10;
     const cellsToCheck = createSequentialArrayFromTo(
-      leftEndCell,
-      rightEndCell,
-      1
+      topEndCell,
+      bottomEndCell,
+      10
     );
     cellsToCheck.forEach((cell) => {
       const cellElement = document.querySelector(
@@ -170,13 +171,13 @@ function checkNoOverlap(
     return valid;
   }
 
-  if (shipPlacement.alignment === "V") {
-    const topEndCell = boardCell - 10 * selectedShipCell;
-    const bottomEndCell = topEndCell + (shipLength - 1) * 10;
+  if (shipPlacement.alignment === "H") {
+    const leftEndCell = boardCell - selectedShipCell;
+    const rightEndCell = leftEndCell + (shipLength - 1);
     const cellsToCheck = createSequentialArrayFromTo(
-      topEndCell,
-      bottomEndCell,
-      10
+      leftEndCell,
+      rightEndCell,
+      1
     );
     cellsToCheck.forEach((cell) => {
       const cellElement = document.querySelector(
@@ -198,15 +199,88 @@ function checkValidShipPlacement(ship, selectedShipCell, boardCell) {
     alignment: ship.orientation,
   };
   if (checkValidBounds(shipPlacement, selectedShipCell, ship.length)) {
-    checkNoOverlap(shipPlacement, selectedShipCell, ship.length, boardCell.id);
+    if (
+      checkNoOverlap(shipPlacement, selectedShipCell, ship.length, boardCell.id)
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function displayTempShip(ship, selectedShipCell, boardCell) {
+  const coordinatesArray = convertIndexToCoordinates(boardCell.id);
+  const shipPlacement = {
+    X: coordinatesArray[0],
+    Y: coordinatesArray[1],
+    alignment: ship.orientation,
+  };
+  const shipLength = ship.length;
+  if (shipPlacement.alignment === "H") {
+    const leftEndCell = boardCell.id - selectedShipCell;
+    const rightEndCell = leftEndCell + (shipLength - 1);
+    const cellsToCheck = createSequentialArrayFromTo(
+      leftEndCell,
+      rightEndCell,
+      1
+    );
+    cellsToCheck.forEach((cell) => {
+      const cellElement = document.querySelector(
+        `[data-player-cell='${cell}']`
+      );
+      cellElement.classList.add("occupied");
+    });
+  }
+
+  if (shipPlacement.alignment === "V") {
+    const topEndCell = boardCell.id - 10 * selectedShipCell;
+    const bottomEndCell = topEndCell + (shipLength - 1) * 10;
+    const cellsToCheck = createSequentialArrayFromTo(
+      topEndCell,
+      bottomEndCell,
+      10
+    );
+    cellsToCheck.forEach((cell) => {
+      const cellElement = document.querySelector(
+        `[data-player-cell='${cell}']`
+      );
+      cellElement.classList.add("occupied");
+    });
   }
 }
 
 cachedDOM.$playerCellsList.forEach((cell) => {
   cell.addEventListener("dragover", () => {
+    lastHoveredBoardCell.setCell(cell);
+  });
+});
+
+cachedDOM.$draggables.forEach((draggable) => {
+  draggable.addEventListener("dragstart", () => {
+    draggable.classList.add("dragging");
+  });
+
+  draggable.addEventListener("dragend", (e) => {
+    const { cell } = lastHoveredBoardCell;
     const draggingElement = document.querySelector(".dragging");
+    draggable.classList.remove("dragging");
     const selectedShipCell = activeShipCell.cellNumber;
     const ship = pureGetDraggingShip(draggingElement);
-    checkValidShipPlacement(ship, selectedShipCell, cell);
+    const { $playerBoard } = cachedDOM;
+    const bounds = $playerBoard.getBoundingClientRect();
+    if (cell === null) {
+      return;
+    }
+    if (
+      e.clientX > bounds.left &&
+      e.clientX < bounds.right &&
+      e.clientY > bounds.top &&
+      e.clientY < bounds.bottom
+    ) {
+      if (checkValidShipPlacement(ship, selectedShipCell, cell)) {
+        displayTempShip(ship, selectedShipCell, cell);
+        cachedDOM.$port.removeChild(draggingElement);
+      }
+    }
   });
 });
