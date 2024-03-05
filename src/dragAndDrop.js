@@ -299,3 +299,27 @@ const resetGameEvent = "resetGameEvent";
 PubSub.subscribe(resetGameEvent, () => {
   shipValues.resetValues();
 });
+
+function rotateShip(shipName) {
+  const shipElement = document.querySelector(`[data-ship="${shipName}"]`);
+  if ([...shipElement.classList].includes("vertical")) {
+    shipElement.classList.remove("vertical");
+    shipElement.classList.add("horizontal");
+  } else {
+    shipElement.classList.remove("horizontal");
+    shipElement.classList.add("vertical");
+  }
+}
+
+function bindRotateButtons() {
+  const rotateButtons = document.querySelectorAll("[data-rotate]");
+
+  rotateButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const shipName = button.dataset.rotate;
+      rotateShip(shipName);
+    });
+  });
+}
+
+bindRotateButtons();
