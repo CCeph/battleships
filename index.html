@@ -285,52 +285,67 @@
       </div>
 
       <div class="ships" data-port>
-        <div
-          class="draggable ship horizontal"
-          draggable="true"
-          data-ship="carrier"
-        >
-          <div class="ship-cell" data-cell="0"></div>
-          <div class="ship-cell" data-cell="1"></div>
-          <div class="ship-cell" data-cell="2"></div>
-          <div class="ship-cell" data-cell="3"></div>
-          <div class="ship-cell" data-cell="4"></div>
+        <div class="ship-flex">
+          <div
+            class="draggable ship horizontal"
+            draggable="true"
+            data-ship="carrier"
+          >
+            <div class="ship-cell" data-cell="0"></div>
+            <div class="ship-cell" data-cell="1"></div>
+            <div class="ship-cell" data-cell="2"></div>
+            <div class="ship-cell" data-cell="3"></div>
+            <div class="ship-cell" data-cell="4"></div>
+          </div>
+          <button class="rotate-button" data-carrier-rotate>Rotate</button>
         </div>
-        <div
-          class="draggable ship horizontal"
-          draggable="true"
-          data-ship="battleship"
-        >
-          <div class="ship-cell" data-cell="0"></div>
-          <div class="ship-cell" data-cell="1"></div>
-          <div class="ship-cell" data-cell="2"></div>
-          <div class="ship-cell" data-cell="3"></div>
+        <div class="ship-flex">
+          <div
+            class="draggable ship horizontal"
+            draggable="true"
+            data-ship="battleship"
+          >
+            <div class="ship-cell" data-cell="0"></div>
+            <div class="ship-cell" data-cell="1"></div>
+            <div class="ship-cell" data-cell="2"></div>
+            <div class="ship-cell" data-cell="3"></div>
+          </div>
+          <button class="rotate-button" data-battleship-rotate>Rotate</button>
         </div>
-        <div
-          class="draggable ship horizontal"
-          draggable="true"
-          data-ship="cruiser"
-        >
-          <div class="ship-cell" data-cell="0"></div>
-          <div class="ship-cell" data-cell="1"></div>
-          <div class="ship-cell" data-cell="2"></div>
+        <div class="ship-flex">
+          <div
+            class="draggable ship horizontal"
+            draggable="true"
+            data-ship="cruiser"
+          >
+            <div class="ship-cell" data-cell="0"></div>
+            <div class="ship-cell" data-cell="1"></div>
+            <div class="ship-cell" data-cell="2"></div>
+          </div>
+          <button class="rotate-button" data-cruiser-rotate>Rotate</button>
         </div>
-        <div
-          class="draggable ship horizontal"
-          draggable="true"
-          data-ship="submarine"
-        >
-          <div class="ship-cell" data-cell="0"></div>
-          <div class="ship-cell" data-cell="1"></div>
-          <div class="ship-cell" data-cell="2"></div>
+        <div class="ship-flex">
+          <div
+            class="draggable ship horizontal"
+            draggable="true"
+            data-ship="submarine"
+          >
+            <div class="ship-cell" data-cell="0"></div>
+            <div class="ship-cell" data-cell="1"></div>
+            <div class="ship-cell" data-cell="2"></div>
+          </div>
+          <button class="rotate-button" data-submarine-rotate>Rotate</button>
         </div>
-        <div
-          class="draggable ship horizontal"
-          draggable="true"
-          data-ship="destroyer"
-        >
-          <div class="ship-cell" data-cell="0"></div>
-          <div class="ship-cell" data-cell="1"></div>
+        <div class="ship-flex">
+          <div
+            class="draggable ship horizontal"
+            draggable="true"
+            data-ship="destroyer"
+          >
+            <div class="ship-cell" data-cell="0"></div>
+            <div class="ship-cell" data-cell="1"></div>
+          </div>
+          <button class="rotate-button" data-destroyer-rotate>Rotate</button>
         </div>
       </div>
       <button class="start-game-button" data-start-game>Start Game</button>
