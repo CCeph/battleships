@@ -273,6 +273,10 @@ cachedDOM.$draggables.forEach((draggable) => {
       if (checkValidShipPlacement(ship, selectedShipCell, cell)) {
         displayTempShip(ship, selectedShipCell, cell);
         draggingElement.classList.add("hide");
+        const rotateButton = document.querySelector(
+          `[data-rotate="${ship.name}"]`
+        );
+        rotateButton.classList.add("hide");
       }
     }
   });

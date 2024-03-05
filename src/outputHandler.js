@@ -6,12 +6,14 @@ function createDOMCache() {
   const $computerCellsList = document.querySelectorAll(".computer .boardCell");
   const $gameStatus = document.querySelector("[data-gameStatus]");
   const $ships = document.querySelectorAll("[data-ship]");
+  const $rotateButtons = document.querySelectorAll("[data-rotate]");
   const $startGameButton = document.querySelector("[data-start-game]");
   return {
     $playerCellsList,
     $computerCellsList,
     $gameStatus,
     $ships,
+    $rotateButtons,
     $startGameButton,
   };
 }
@@ -125,10 +127,13 @@ function renderBadShipPlacement() {
 }
 
 function showPortShips() {
-  const { $ships } = cachedDOM;
-  const ships = [...$ships];
-  ships.forEach((ship) => {
+  const { $ships, $rotateButtons } = cachedDOM;
+  $ships.forEach((ship) => {
     ship.classList.remove("hide");
+  });
+
+  $rotateButtons.forEach((button) => {
+    button.classList.remove("hide");
   });
 
   const { $startGameButton } = cachedDOM;
